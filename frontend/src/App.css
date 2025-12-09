@@ -1,0 +1,73 @@
+/* Light Mode */
+:root{
+  /* Layout / spacing */
+  --radius: 8px;
+  --navbar-height: 64px;
+  --gap: 16px;
+  --transition-fast: 160ms;
+  --transition-medium: 240ms;
+
+  /* Backgrounds / surfaces */
+  --color-bg: #FFFFFF;
+  --color-surface: #F8F9FA;
+  --color-navbar-bg: #F8F9FA;
+
+  /* Text */
+  --color-text-primary: #212121;
+  --color-text-secondary: #555555;
+  --color-text-muted: rgba(33,33,33,0.6);
+
+  /* Borders / dividers */
+  --color-border: #E0E0E0;
+
+  /* Primary / accent (CTA) */
+  --color-primary: #1976D2;
+  --color-primary-hover: #1565C0;
+  --color-primary-foreground: #FFFFFF;
+
+  /* Secondary / neutral actions */
+  --color-secondary-surface: #E0E0E0;
+  --color-secondary-foreground: #212121;
+
+  /* Focus / outline */
+  --color-focus: rgba(25,118,210,0.24);
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(33,33,33,0.08);
+  --shadow-2: 0 6px 18px rgba(33,33,33,0.08);
+
+  /* misc */
+  --glass-bg: rgba(255,255,255,0.6);
+  --disabled: rgba(33,33,33,0.25);
+}
+
+
+@media (prefers-color-scheme:dark){
+    /* Dark Mode */
+    [data-theme="dark"]{
+    --color-bg: #121212;
+    --color-surface: #1E1E1E;
+    --color-navbar-bg: #1E1E1E;
+
+    --color-text-primary: #E0E0E0;
+    --color-text-secondary: #B0B0B0;
+    --color-text-muted: rgba(224,224,224,0.6);
+
+    --color-border: #2A2A2A;
+
+    --color-primary: #2196F3;
+    --color-primary-hover: #1976D2;
+    --color-primary-foreground: #FFFFFF;
+
+    --color-secondary-surface: #2C2C2C;
+    --color-secondary-foreground: #E0E0E0;
+
+    --color-focus: rgba(33,150,243,0.18);
+
+    --shadow-1: 0 1px 3px rgba(0,0,0,0.6);
+    --shadow-2: 0 6px 18px rgba(0,0,0,0.6);
+
+    --glass-bg: rgba(30,30,30,0.6);
+    --disabled: rgba(224,224,224,0.18);
+    }
+}
