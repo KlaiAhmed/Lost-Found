@@ -30,6 +30,7 @@
 /* Dark Mode */
 @media (prefers-color-scheme:dark){
   :root[data-theme="dark"]{
+    
     /* Page */
     --color-page: #0B0C0B;
     --color-cards: #121414;
@@ -38,12 +39,12 @@
     --color-navbar: #07121a;
 
     /* Btn */
-    --color-text-primary: #EDEDED;/* dark-mode primary text on light-ish surfaces */
-    --color-btn-primary: #0B1A2B; /* primary CTA (navy) — white text on top */
+    --color-text-primary: #EDEDED;
+    --color-btn-primary: #0B1A2B;
     --color-btn-primary-hover: #153042;
-    --color-btn-secondary: #C9B59C;      /* beige used as secondary filled btn */
+    --color-btn-secondary: #C9B59C;
     --color-btn-secondary-hover: #B8A589;
-    --color-btn-tertiary: #232524;       /* subtle tertiary / outline bg */
+    --color-btn-tertiary: #232524;
     --color-btn-tertiary-hover: #333433;
 
     /* Text */
