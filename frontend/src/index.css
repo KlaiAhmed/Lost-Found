@@ -5,6 +5,7 @@ body{
     padding: 0;
     box-sizing: border-box;
     scrollbar-width: thin;
+    background-color: var(--color-page);
 }
 
 body, input, button, textarea, select{

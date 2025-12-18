@@ -26,6 +26,21 @@
   --success: #2DBE6E;
   --warning: #FFB020;
   --error:   #D64545;
+
+  /*forms*/
+  --bg: #ffffff;
+  
+  --muted: #374151;
+  --muted-200: #f3f4f6;
+  --muted-50: #f8fafc;
+
+  --input-bg: #ffffff;
+  --border: #e5e7eb;
+
+  --button-text: #ffffff;
+
+  --shadow-elev-1: rgba(16, 24, 40, 0.06);
+  --shadow-elev-2: rgba(17, 24, 39, 0.06);
 }
 
 /* Dark Mode */
@@ -37,6 +52,7 @@
   --color-accent: #B89F7F;
   --color-navbar: #07121a;
   --color-icons: #333333;
+
   /* Btn */
   --color-text-primary: #EDEDED;
   --color-btn-primary: #0B1A2B;
@@ -45,12 +61,29 @@
   --color-btn-secondary-hover: #B8A589;
   --color-btn-tertiary: #232524;
   --color-btn-tertiary-hover: #333433;
+
   /* Text */
   --text: #F5F5F4;
   --muted-text: #BFB3A9;
+
   /* Semantic */
   --success: #3EDB84;
   --warning: #FFBF47;
   --error: #FF6B6B;
+
+  /* Forms */
+  --bg: #0b1220;
+
+  --muted: #9ca3af;
+  --muted-200: #1f2933;
+  --muted-50: #111827;
+
+  --input-bg: #0f172a;
+  --border: #243044;
+
+  --button-text: #0b1220;
+
+  --shadow-elev-1: rgba(0, 0, 0, 0.45);
+  --shadow-elev-2: rgba(0, 0, 0, 0.6);
 }
 
