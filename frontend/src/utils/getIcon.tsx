@@ -14,7 +14,7 @@ const Icon = ({name,className,width,height,color,onClick,onPointerDown}:IconProp
 
     switch (name) {
 
-        case"profile":
+        case "profile":
             svg = (
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 48 48" fill="currentColor">
                     <path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M38.8,35c-3.4,4.5-8.8,7.5-14.8,7.5C13.8,42.5,5.5,34.2,5.5,24c0-2.1,0.4-4.1,1-6"></path><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12.4,9.6C15.6,7,19.6,5.5,24,5.5c10.2,0,18.5,8.3,18.5,18.5c0,1.2-0.1,2.4-0.3,3.5"></path><circle cx="24" cy="18" r="4.5" fill="none" stroke="#000" strokeWidth="3"></circle><path fill="none" stroke="#000" strokeWidth="3" d="M32.5,30.3c0-1.6-1.3-2.8-2.8-2.8H18.3c-1.6,0-2.8,1.3-2.8,2.8v0c0,2.7,3.4,5.2,8.5,5.2S32.5,33,32.5,30.3	L32.5,30.3z"></path>
@@ -24,27 +24,43 @@ const Icon = ({name,className,width,height,color,onClick,onPointerDown}:IconProp
 
         case "search":
             svg = (
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-                    <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier">
+                    <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g>
                 </svg>
             );
             break;
 
-        case"sun":
+        case "sun":
             svg = (
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M 11.992188 -0.0078125 A 0.50005 0.50005 0 0 0 11.5 0.5 L 11.5 2.5 A 0.50005 0.50005 0 1 0 12.5 2.5 L 12.5 0.5 A 0.50005 0.50005 0 0 0 11.992188 -0.0078125 z M 3.8632812 3.3632812 A 0.50005 0.50005 0 0 0 3.5136719 4.2207031 L 4.9277344 5.6347656 A 0.50005 0.50005 0 1 0 5.6347656 4.9277344 L 4.2207031 3.5136719 A 0.50005 0.50005 0 0 0 3.8632812 3.3632812 z M 20.123047 3.3632812 A 0.50005 0.50005 0 0 0 19.779297 3.5136719 L 18.365234 4.9277344 A 0.50005 0.50005 0 1 0 19.072266 5.6347656 L 20.486328 4.2207031 A 0.50005 0.50005 0 0 0 20.123047 3.3632812 z M 12 5 C 8.1399268 5 5 8.1399296 5 12 C 5 15.86007 8.1399268 19 12 19 C 15.860073 19 19 15.86007 19 12 C 19 8.1399296 15.860073 5 12 5 z M 12 6 C 15.319633 6 18 8.6803688 18 12 C 18 15.319631 15.319633 18 12 18 C 8.6803666 18 6 15.319631 6 12 C 6 8.6803688 8.6803666 6 12 6 z M 0.5 11.5 A 0.50005 0.50005 0 1 0 0.5 12.5 L 2.1113281 12.5 L 2.5 12.5 A 0.50005 0.50005 0 1 0 2.5 11.5 L 2.1113281 11.5 L 0.5 11.5 z M 21.5 11.5 A 0.50005 0.50005 0 1 0 21.5 12.5 L 23.5 12.5 A 0.50005 0.50005 0 1 0 23.5 11.5 L 21.5 11.5 z M 5.2714844 18.212891 A 0.50005 0.50005 0 0 0 4.9277344 18.365234 L 3.5136719 19.779297 A 0.50005 0.50005 0 1 0 4.2207031 20.486328 L 5.6347656 19.072266 A 0.50005 0.50005 0 0 0 5.2714844 18.212891 z M 18.712891 18.212891 A 0.50005 0.50005 0 0 0 18.365234 19.072266 L 19.779297 20.486328 A 0.50005 0.50005 0 1 0 20.486328 19.779297 L 19.072266 18.365234 A 0.50005 0.50005 0 0 0 18.712891 18.212891 z M 11.992188 20.992188 A 0.50005 0.50005 0 0 0 11.5 21.5 L 11.5 23.5 A 0.50005 0.50005 0 1 0 12.5 23.5 L 12.5 21.5 A 0.50005 0.50005 0 0 0 11.992188 20.992188 z"></path>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g>
                 </svg>
             );
-        break
+            break;
 
-        case"moon":
+        case "moon":
             svg = (
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22 15.8442C20.6866 16.4382 19.2286 16.7688 17.6935 16.7688C11.9153 16.7688 7.23116 12.0847 7.23116 6.30654C7.23116 4.77135 7.5618 3.3134 8.15577 2C4.52576 3.64163 2 7.2947 2 11.5377C2 17.3159 6.68414 22 12.4623 22C16.7053 22 20.3584 19.4742 22 15.8442Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 15.8442C20.6866 16.4382 19.2286 16.7688 17.6935 16.7688C11.9153 16.7688 7.23116 12.0847 7.23116 6.30654C7.23116 4.77135 7.5618 3.3134 8.15577 2C4.52576 3.64163 2 7.2947 2 11.5377C2 17.3159 6.68414 22 12.4623 22C16.7053 22 20.3584 19.4742 22 15.8442Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             );
-        break
+            break;
+
+        case "sunmoon":
+            svg = (
+                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xmlSpace="preserve" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css">{`.st0{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;}`}</style> <line className="st0" x1="16" y1="3" x2="16" y2="29"></line> <path className="st0" d="M16,23c-3.87,0-7-3.13-7-7s3.13-7,7-7"></path> <line className="st0" x1="6.81" y1="6.81" x2="8.93" y2="8.93"></line> <line className="st0" x1="3" y1="16" x2="6" y2="16"></line> <line className="st0" x1="6.81" y1="25.19" x2="8.93" y2="23.07"></line> <path className="st0" d="M16,12.55C17.2,10.43,19.48,9,22.09,9c0.16,0,0.31,0.01,0.47,0.02c-1.67,0.88-2.8,2.63-2.8,4.64 c0,2.9,2.35,5.25,5.25,5.25c1.6,0,3.03-0.72,3.99-1.85C28.48,20.43,25.59,23,22.09,23c-2.61,0-4.89-1.43-6.09-3.55"></path> </g>
+                </svg>
+            );
+            break;
+
+        case "tick":
+            svg = (
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.89163 13.2687L9.16582 17.5427L18.7085 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></path> </g>
+                </svg>
+            );
+            break;
 
         default:
             svg = <></>;
