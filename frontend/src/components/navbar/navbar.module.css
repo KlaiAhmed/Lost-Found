@@ -1,5 +1,5 @@
 .navContainer{
-    min-height: 64px;
+    min-height: 50px;
     width: 100%;
     padding: 0.75rem 0;
     background-color: var(--color-navbar)
@@ -15,6 +15,90 @@
 }
 
 .logo{
-    max-height: 60px;
+    max-height: 50px;
     cursor: pointer;
+    -webkit-user-drag: none;
+}
+
+/* Nav Links */
+.navLinksContainer{
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.navLinks{
+    text-decoration: none;
+    color: var(--color-icons);
+    font-weight: 500;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.navLinks:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    margin-top: 2px;
+    background-color: var(--color-icons);
+}
+
+@media (hover: hover){
+    .navLinks:hover:after{
+        width: 100%;
+        transition: width 0.2s;
+    }
+}
+
+.activeLink:after{
+    width: 100%;
+    transition: width 0.3s;
+}
+
+/* Nav Actions */
+.navActions{
+    display: flex;
+    align-items: center;
+    gap: 1.2em;
+}
+
+.searchButton{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.searchIcon{
+    width: 20px;
+    height: 20px;
+    color: var(--color-icons);
+
+}
+
+.themeToggle{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.themeIcon{
+    width: 20px;
+    height: 20px;
+    color: var(--color-icons);
+}
+
+.signup{
+    padding: 0.5rem 1rem;
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
 }
