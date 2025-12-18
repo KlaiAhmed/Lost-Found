@@ -31,7 +31,7 @@
 /* Dark Mode */
 :root[data-theme="dark"]{
   /* Page */
-  --color-page: #0B0C0B;
+  --color-page: #07121a;
   --color-cards: #121414;
   --color-border: #2B2C2B;
   --color-accent: #B89F7F;
@@ -53,3 +53,4 @@
   --warning: #FFBF47;
   --error: #FF6B6B;
 }
+

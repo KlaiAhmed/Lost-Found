@@ -16,15 +16,15 @@ const ThemeWindow = ({ handleThemeChange , theme, ref , onClickOutside }: ThemeW
   return (
         <>
             <div className={style.windowContainer} ref={ref}>
-              <button onClick={() => handleThemeChange("dark")} className={style.button} >
-                <Icon name="moon" className={style.icon} />
-                Dark
-                {theme === "dark" &&<Icon name="tick" className={style.tick} />}
-              </button>
               <button onClick={() => handleThemeChange("light")} className={style.button} >
                 <Icon name="sun" className={style.icon} />
                 Light
                 {theme === "light" &&<Icon name="tick" className={style.tick} />}
+              </button>
+              <button onClick={() => handleThemeChange("dark")} className={style.button} >
+                <Icon name="moon" className={style.icon} />
+                Dark
+                {theme === "dark" &&<Icon name="tick" className={style.tick} />}
               </button>
               <button onClick={() => handleThemeChange("system")} className={style.button} >
                 <Icon name="sunmoon" className={style.icon} />
