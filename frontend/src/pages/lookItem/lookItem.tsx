@@ -1,8 +1,8 @@
 import axios from 'axios';
-import style from './postItem.module.css';
+import style from './lookItem.module.css';
 import { useForm } from 'react-hook-form';
 
-const postItem = () => {
+const lookItem = () => {
     const { 
         register, 
         handleSubmit,
@@ -17,9 +17,8 @@ const postItem = () => {
       phone: '',
       description: '',
       category: '',
-      locationFound: '',
-      isDamaged: '',
-      isShipmentPossible: '',
+      locationLost: '',
+      reward:'',
       additionalNotes: '',
       image: '',
       city: '',
@@ -76,11 +75,11 @@ const postItem = () => {
                 payload.append('additionalNotes', formValues.additionalNotes);
             }
 
-            await axios.post(`${import.meta.env.VITE_API_URL}/api/postitem`, payload);
-            alert('Found item posted successfully!');
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/lookitem`, payload);
+            alert('Lost item posted successfully!');
             reset();
         } catch (error) {
-            console.error('Error posting found item:', error);
+            console.error('Error posting lost item:', error);
         }
     };
 
@@ -162,38 +161,27 @@ const postItem = () => {
             <label htmlFor="">Email</label>
             <input type="email" placeholder='Enter your email address' {...register('email')} />
 
-            <h2 className={style.formSubtitle}>Found details</h2>
+            <h2 className={style.formSubtitle}>Details</h2>
 
-            <label htmlFor="">Location Found</label>
-            <input type="text" placeholder='Enter location where item was found' {...register('locationFound', { required: true })} />
+            <label htmlFor="">Location Lost</label>
+            <input type="text" placeholder='Enter location where item was lost' {...register('locationLost', { required: true })} />
 
             <div className={style.timeFoundContainer}>
                 <div className={style.timeFoundItem}>
-                    <label htmlFor=''>Time Found</label>
+                    <label htmlFor=''>Time Lost</label>
                     <input type="time" {...register('time')} />
                 </div>
             
                 <div className={style.dateFoundItem}>
-                    <label htmlFor="">Date Found</label>
+                    <label htmlFor="">Date Lost</label>
                     <input type="date" {...register('date')} />
                 </div>
             </div>
 
             <h2 className={style.formSubtitle}>Additional details</h2>
 
-            <label htmlFor="">Is the item damaged?</label>
-            <select {...register('isDamaged')}>
-                <option value="" hidden>Select an option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-            
-            <label htmlFor="">Is Shipment Possible ?</label>
-            <select {...register('isShipmentPossible')}>
-                <option value="" hidden>Select an option</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+            <label htmlFor="">Reward</label>
+            <input type="text" placeholder='Enter reward details if any' {...register('reward')} />
 
             <label htmlFor="">Additional Notes</label>
             <textarea placeholder='Enter any additional notes' {...register('additionalNotes')}></textarea>
@@ -208,4 +196,4 @@ const postItem = () => {
   );
 }
 
-export default postItem;
+export default lookItem;

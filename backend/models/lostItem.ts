@@ -22,28 +22,20 @@ const ImageMetaSchema = new mongoose.Schema({
   uploadedAt: { type: Date, default: Date.now },
 });
 
-const FoundItemSchema = new mongoose.Schema({
+const lostItemSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
   category: String,
-  dateFound: { type: Date },
-  timeFound: String,
-  foundLocation: String,
-  isDamaged: { type: Boolean, default: false },
+  dateLost: { type: Date },
+  timeLost: String,
+  lostLocation: String,
   holder: HolderSchema,
   contact: ContactSchema,
-  delivery: {
-    possible: { type: Boolean, default: false },
-    details: String
-  },
-  meetup: {
-    possible: { type: Boolean, default: false },
-    details: String
-  },
   image: ImageMetaSchema,
+  reward: String,
   additionalNotes: String,
-  status: { type: String, enum: ['found','lost','claimed','returned'], default: 'found' },
+  status: { type: String, enum: ['found','lost','claimed','returned'], default: 'lost' },
   createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('FoundItem', FoundItemSchema);
+export default mongoose.model('LostItem', lostItemSchema);

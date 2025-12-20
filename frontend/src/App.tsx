@@ -1,7 +1,7 @@
 import './App.css'
 import HomePage from './pages/Home/home'
 
-import PostItem from './pages/postItem/postItem'
+import LookItem from './pages/lookItem/lookItem'
 
 import MainLayout from './pages/mainLayout/mainLayout'
 
@@ -12,7 +12,7 @@ function App() {
     <>
       <MainLayout />
       {/*<HomePage/>*/}
-      <PostItem/>
+      <LookItem/>
     </>
   )
 }
