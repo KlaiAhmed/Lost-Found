@@ -1,18 +1,13 @@
 import './App.css'
-import HomePage from './pages/Home/home'
-
-import LookItem from './pages/lookItem/lookItem'
-
-import MainLayout from './pages/mainLayout/mainLayout'
+import { RouterProvider } from "react-router-dom";
+import router from "./utils/router";
 
 
 function App() {
 
   return (
     <>
-      <MainLayout />
-      {/*<HomePage/>*/}
-      <LookItem/>
+      <RouterProvider router={router} />
     </>
   )
 }

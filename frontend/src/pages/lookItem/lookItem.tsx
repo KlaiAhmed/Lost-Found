@@ -86,7 +86,7 @@ const lookItem = () => {
   return (
     <>
         <form className={style.formContainer} onSubmit={handleSubmit(onSubmit)}>
-            <h1 className={style.formTitle}>Post Found Item</h1>
+            <h1 className={style.formTitle}>Look for lost Items</h1>
 
             <h2 className={style.formSubtitle}>Item details</h2>
             <label htmlFor="">Item Name</label>

@@ -4,6 +4,7 @@ import Icon from '../../../utils/getIcon';
 import useTheme from '../../../hooks/useTheme';
 import ThemeWindow from '../themeSwitchWindow/themeWindow';
 import { useState, useRef } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -22,6 +23,10 @@ const Navbar = () => {
     setIsThemeWindowOpen(!isThemeWindowOpen);
   };
 
+  const navLinkClass = (isActive: boolean) => {
+    return `${style.navLinks} ${isActive ? style.activeLink : ''}`;
+  };
+
   return (
     <>
         <nav className={style.navContainer}>
@@ -30,13 +35,27 @@ const Navbar = () => {
               <img src={Logo} alt="App Logo that redirects href home on click" className={style.logo} />
             </a>
 
-            <div className={style.navLinksContainer}>
-              <a href="/" className={`${style.navLinks} ${style.activeLink}`}>Home</a>
-              <button className={style.navLinks}>Items</button>
-              <a href="/PostFoundItem" className={style.navLinks}>Post Found Item</a>
-              <a href="/ReportLostItem" className={style.navLinks}>Report Lost Item</a>
-              <a href="/Help" className={style.navLinks}>Help</a>
-            </div>
+          <div className={style.navLinksContainer}>
+            <NavLink to="/" className={({ isActive }) => navLinkClass(isActive)}>
+              Home
+            </NavLink>
+
+            <NavLink to="/items" className={({ isActive }) => navLinkClass(isActive)}>
+              Items
+            </NavLink>
+
+            <NavLink to="/postfounditem" className={({ isActive }) => navLinkClass(isActive)}>
+              Post Found Item
+            </NavLink>
+
+            <NavLink to="/lookforitem" className={({ isActive }) => navLinkClass(isActive)}>
+              Report Lost Item
+            </NavLink>
+
+            <NavLink to="/help" className={({ isActive }) => navLinkClass(isActive)}>
+              Help
+            </NavLink>
+          </div>
 
             <div className={style.navActions}>
               <button className={style.searchButton}>
