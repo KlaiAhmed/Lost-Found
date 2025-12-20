@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form';
 const postItem = () => {
     const { 
         register, 
-        handleSubmit, 
+        handleSubmit,
+        reset,
     } = useForm({
     defaultValues: {
-      name: '',
+      itemName: '',
+      contactName: '',
       email: '',
       date: '',
       time: '',
@@ -26,13 +28,57 @@ const postItem = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
-    try {
-        axios.post(import.meta.env.VITE_API_URL + '/api/found-items', data)
-    }catch (error) {
-        console.error('Error posting found item:', error);
-    }
-  };
+    const onSubmit = async (formValues: any) => {
+        try {
+            const payload = new FormData();
+
+            payload.append('title', formValues.itemName);
+            payload.append('description', formValues.description || '');
+            payload.append('category', formValues.category || '');
+
+            if (formValues.date) {
+                payload.append('dateFound', new Date(formValues.date).toISOString());
+            }
+            if (formValues.time) {
+                payload.append('timeFound', formValues.time);
+            }
+
+            const holderObj = {
+                address: formValues.address || '',
+                city: formValues.city || '',
+            };
+            payload.append('holder', JSON.stringify(holderObj));
+
+            const contactObj = {
+                name: formValues.contactName || '',
+                email: formValues.email || '',
+                phone: formValues.phone || '',
+                preferContact: formValues.contactMethod || ''
+            };
+            payload.append('contact', JSON.stringify(contactObj));
+
+            const deliveryObj = {
+            possible: formValues.isShipmentPossible === 'yes',
+            details: formValues.additionalNotes || ''
+            };
+            payload.append('delivery', JSON.stringify(deliveryObj));
+
+            if (formValues.locationFound) {
+                const meetupObj = { location: formValues.locationFound };
+                payload.append('meetup', JSON.stringify(meetupObj));
+            }
+
+            if (formValues.image && formValues.image.length > 0) {
+                payload.append('image', formValues.image[0]);
+            }
+
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/postitem`, payload);
+            alert('Found item posted successfully!');
+            reset();
+        } catch (error) {
+            console.error('Error posting found item:', error);
+        }
+    };
 
   return (
     <>
@@ -41,7 +87,7 @@ const postItem = () => {
 
             <h2 className={style.formSubtitle}>Item details</h2>
             <label htmlFor="">Item Name</label>
-            <input type="text" placeholder='Enter item name' {...register('name', { required: true })} />
+            <input type="text" placeholder='Enter item name' {...register('itemName', { required: true })} />
 
             <label htmlFor="">Description</label>
             <textarea placeholder='Enter item description' {...register('description', { required: true })}></textarea>
@@ -60,12 +106,12 @@ const postItem = () => {
             </select>
 
             <label htmlFor="">Upload Image</label>
-            <input type="file" accept="image/*" {...register('image', { required: true })} />
+            <input type="file" accept="image/*" {...register('image')} />
             <span className={style.imageNote}>Supported formats: JPG, PNG. Max size: 5MB.</span>
 
             <h2 className={style.formSubtitle}>Contact details</h2>
             <label htmlFor="">Name</label>
-            <input type="text" placeholder='Enter your name' {...register('name', { required: true })} />
+            <input type="text" placeholder='Enter your name' {...register('contactName', { required: true })} />
 
             <select {...register('city', { required: true })}>
                 <option value="" hidden>City</option>
