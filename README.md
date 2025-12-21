@@ -14,26 +14,23 @@ A full‑stack application letting users post **found** items (optionally offeri
 
 * Post found items (images, description, location, optional reward)
 * Post lost item reports and browse found items
-* Search and basic matching (text + location radius)
+* Search and basic matching
 * Claim workflow with evidence uploads
-* Authentication (JWT), role-based actions, and secure uploads
 * Light / Dark / System theme with persistent user preference
 
 ---
 
 ## Tech stack
 
-* **Frontend:** React + TypeScript, react-router (`createBrowserRouter`), Vite (or CRA), Tailwind CSS or CSS Modules
+* **Frontend:** React + TypeScript, Vite , CSS Modules
 * **Backend:** Node.js, Express, TypeScript, Mongoose
-* **Database:** MongoDB (Atlas or local)
-* **Storage:** Cloudinary or S3 (dev: local `uploads/`)
-* **Auth:** JWT; optional Stripe for reward escrow
-
+* **Database:** MongoDB
+* **Storage:**  multer , local `uploads/`
 ---
 
 ## Architecture & folder layout
 
-Project structure (matches your workspace):
+Project structure :
 
 ```
 /backend
@@ -60,15 +57,16 @@ Project structure (matches your workspace):
 │ └─ App.css
 ├─ .env
 └─ vite.config.ts
+
+/ScreenShots        #This repository includes four images used by the Lost & Found web app
 ```
 
-(Adjust filenames to match your repo; this mirrors the screenshot-provided structure.)
 
 ---
 
 ## Getting started (development)
 
-**Prerequisites:** Node >=18, npm/yarn/pnpm, MongoDB URI
+**Prerequisites:** Node, npm, MongoDB URI
 
 **Install & run**
 
@@ -76,7 +74,7 @@ Project structure (matches your workspace):
 # server
 cd backend
 npm install
-npm run dev
+npx tsx watch server
 
 # client
 cd ../frontend
@@ -158,13 +156,32 @@ const router = createBrowserRouter([
 
 ---
 
-## Image uploads & rewards handling
+## Image uploads
 
-* Use `multer` for multipart uploads in dev or upload directly to Cloudinary/S3 from the client.
-* Store public URLs on `Item.images` and keep thumbnails + size/type validation.
-* Reward stored as integer (cents). For on‑platform payment/escrow, integrate Stripe; otherwise treat rewards as off‑platform promises and display terms to users.
+* Use `multer` for multipart uploads uploaded to /backend/uploads.
 
 ---
+
+## Images / Visual Assets
+
+### Home Page
+| Light mode | Dark mode |
+|---:|:---|
+| [![Home page — light mode (thumb)](ScreenShots/thumb-HomePageLightMode.png)](ScreenShots/HomePageLightMode.png) | [![Home page — dark mode (thumb)](ScreenShots/thumb-HomePageDarkMode.png)](ScreenShots/HomePageDarkMode.png) |
+
+### Post/look for Items Form
+| Post found Items | Post lost Items |
+|---:|:---|
+| [![Post found item form (thumb)](ScreenShots/thumb-postFoundItem.png)](ScreenShots/postFoundItem.png) | [![Post lost item form (thumb)](ScreenShots/thumb-postLostItem.png)](ScreenShots/postLostItem.png) |
+
+### Error Page
+[![Error page (thumb)](ScreenShots/thumb-ErrorPage.png)](ScreenShots/ErrorPage.png)
+
+### Database — MongoDB Compass
+[![Database — MongoDB Compass (thumb)](ScreenShots/thumb-FoundItems.png)](ScreenShots/FoundItems.png)
+
+---
+
 
 ## License & contact
 
