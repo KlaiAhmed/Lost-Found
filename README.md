@@ -58,7 +58,7 @@ Project structure :
 ├─ .env
 └─ vite.config.ts
 
-/ScreenShots        #This repository includes four images used by the Lost & Found web app
+/ScreenShots      #This repository includes screenshots that demonstrate  the Lost & Found web app
 ```
 
 
