@@ -37,7 +37,7 @@ const postItem = () => {
             payload.append('category', formValues.category || '');
 
             if (formValues.date) {
-                payload.append('dateFound', new Date(formValues.date).toISOString());
+                payload.append('dateOccurred', new Date(formValues.date).toISOString());
             }
             if (formValues.time) {
                 payload.append('timeFound', formValues.time);
@@ -75,7 +75,7 @@ const postItem = () => {
             if (formValues.additionalNotes) {
                 payload.append('additionalNotes', formValues.additionalNotes);
             }
-
+            console.log('Payload:', payload);
             await axios.post(`${import.meta.env.VITE_API_URL}/api/postitem`, payload);
             alert('Found item posted successfully!');
             reset();
@@ -173,7 +173,7 @@ const postItem = () => {
                     <input type="time" {...register('time')} />
                 </div>
             
-                <div className={style.dateFoundItem}>
+                <div className={style.dateOccurredItem}>
                     <label htmlFor="">Date Found</label>
                     <input type="date" {...register('date')} />
                 </div>

@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { uploadSingle } from '../middlewares/upload';
-import FoundItem from '../models/foundItem';
-import LostItem from '../models/lostItem'
+import Item from '../models/item';
 
 const router = express.Router();
 
@@ -29,7 +28,7 @@ router.post('/postitem', uploadSingle, async (req: Request, res: Response, next:
       title: body.title,
       description: body.description,
       category: body.category,
-      dateFound: body.dateFound ? new Date(body.dateFound) : undefined,
+      dateOccurred: body.dateOccurred ? new Date(body.dateOccurred) : undefined,
       timeFound: body.timeFound,
       holder: parseIfJson(body.holder),
       contact: typeof contact === 'object' ? contact : { name: contactName, phone: body.phone, email: body.email },
@@ -49,7 +48,7 @@ router.post('/postitem', uploadSingle, async (req: Request, res: Response, next:
       };
     }
 
-    const saved = await FoundItem.create(doc);
+    const saved = await Item.create(doc);
     return res.status(201).json({ success: true, item: saved });
   } catch (err) {
     next(err);
@@ -71,7 +70,7 @@ router.post('/lookitem', uploadSingle, async (req: Request, res: Response, next:
       title: body.title,
       description: body.description,
       category: body.category,
-      dateFound: body.dateFound ? new Date(body.dateFound) : undefined,
+      dateOccurred: body.dateOccurred ? new Date(body.dateOccurred) : undefined,
       timeFound: body.timeFound,
       holder: parseIfJson(body.holder),
       contact: typeof contact === 'object' ? contact : { name: contactName, phone: body.phone, email: body.email },
@@ -90,7 +89,7 @@ router.post('/lookitem', uploadSingle, async (req: Request, res: Response, next:
       };
     }
 
-    const saved = await LostItem.create(doc);
+    const saved = await Item.create(doc);
     return res.status(201).json({ success: true, item: saved });
   } catch (err) {
     next(err);

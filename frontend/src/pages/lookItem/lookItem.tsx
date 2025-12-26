@@ -36,7 +36,7 @@ const lookItem = () => {
             payload.append('category', formValues.category || '');
 
             if (formValues.date) {
-                payload.append('dateFound', new Date(formValues.date).toISOString());
+                payload.append('dateOccurred', new Date(formValues.date).toISOString());
             }
             if (formValues.time) {
                 payload.append('timeFound', formValues.time);
@@ -172,7 +172,7 @@ const lookItem = () => {
                     <input type="time" {...register('time')} />
                 </div>
             
-                <div className={style.dateFoundItem}>
+                <div className={style.dateOccurredItem}>
                     <label htmlFor="">Date Lost</label>
                     <input type="date" {...register('date')} />
                 </div>
