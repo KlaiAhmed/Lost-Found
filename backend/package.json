@@ -1,10 +1,12 @@
 {
-  "name": "LostAndFound_backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Backend for LostAndFound application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch server.ts",
+    "start": "tsx server.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,7 @@
     "@types/express": "^5.0.6",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.3",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

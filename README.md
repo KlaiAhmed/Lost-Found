@@ -74,7 +74,7 @@ Project structure :
 # server
 cd backend
 npm install
-npx tsx watch server
+npm run dev
 
 # client
 cd ../frontend
