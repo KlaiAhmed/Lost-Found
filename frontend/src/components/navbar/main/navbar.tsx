@@ -14,7 +14,6 @@ const Navbar = () => {
 
   const handleThemeChange = (themePref: "dark" | "light" | "system") => {
     setTheme(themePref);
-    console.log(`Theme set to: ${theme}`);
   };
 
   const [isThemeWindowOpen, setIsThemeWindowOpen] = useState(false);

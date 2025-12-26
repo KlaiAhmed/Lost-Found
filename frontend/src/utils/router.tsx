@@ -3,6 +3,7 @@ import MainLayout from "../pages/mainLayout/mainLayout";
 import Home from "../pages/Home/home";
 import LookItem from "../pages/lookItem/lookItem";
 import PostItem from "../pages/postItem/postItem";
+import ItemsPage from "../pages/items/items";
 import NotFound from "../pages/404/404";
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "postfounditem",
         element: <PostItem />
+      },
+      {
+        path: "items",
+        element: <ItemsPage />
       }
     ]
   }
