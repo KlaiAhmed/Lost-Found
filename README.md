@@ -99,20 +99,47 @@ VITE_API_BASE_URL=http://localhost:5000
 
 ## Database models (Mongoose) — example
 
-**foundItem (simplified)**
+**Item (simplified)**
 
 ```ts
-{title:{type:String,required:true},description:String,category:String,dateFound:Date,location:String,isDamaged:{type:Boolean,default:false},contact:{name:{type:String,required:true},email:String,phone:String,preferContact:{type:String,enum:['email','phone','text'],default:'phone'}},image:{url:String,filename:String,mimetype:String,size:Number},additionalNotes:String,reward:{type:Number,default:0},status:{type:String,enum:['found','claimed','returned','closed'],default:'found'}},{timestamps:true}
+{
+  title: String,
+  description: String,
+  category: String,
+  dateOccurred: Date,
+  location: String,
+  status: { type: String, enum: ['found', 'lost', 'returned'] },
+  reward: Number,
+  holder: {
+    address: String,
+    city: String,
+    postal: String
+  },
+  contact: {
+    name: String,
+    email: String,
+    phone: String,
+    preferContact: { type: String, enum: ['email', 'phone', 'text'], default: 'phone' }
+  },
+  image: {
+    filename: String,
+    mimetype: String,
+    size: Number,
+    uploadedAt: Date
+  },
+  additionalNotes: String
+}, { timestamps: true }
 ```
 
 ---
 
-## API endpoints (high-level)
+## API endpoints
 
 Base path: `/api`
 
 * `POST /postitem` — post found item
 * `POST /lookitem` — look for lost items
+* `GET /items`     — get all items
 
 ---
 
@@ -136,6 +163,9 @@ const router = createBrowserRouter([
       {
         path: "postfounditem",
         element: <PostItem />
+      },{
+        path: "items",
+        element: <Items />
       }
     ]
   }
@@ -160,19 +190,31 @@ const router = createBrowserRouter([
 
 ### Home Page
 | Light mode | Dark mode |
-|---:|:---|
-| [![Home page — light mode (thumb)](ScreenShots/thumb-HomePageLightMode.png)](ScreenShots/HomePageLightMode.png) | [![Home page — dark mode (thumb)](ScreenShots/thumb-HomePageDarkMode.png)](ScreenShots/HomePageDarkMode.png) |
+|---:|---|
+<a href="ScreenShots/HomePageLightMode.png">
+  <img src="ScreenShots/HomePageLightMode.png" alt="Home page — light mode" width="420">
+</a> | 
+<a href="ScreenShots/HomePageDarkMode.png">
+  <img src="ScreenShots/HomePageDarkMode.png" alt="Home page — dark mode" width="420">
+</a> |
 
 ### Post/look for Items Form
 | Post found Items | Post lost Items |
-|---:|:---|
-| [![Post found item form (thumb)](ScreenShots/thumb-postFoundItem.png)](ScreenShots/postFoundItem.png) | [![Post lost item form (thumb)](ScreenShots/thumb-postLostItem.png)](ScreenShots/postLostItem.png) |
+|---:|---|
+<a href="ScreenShots/postFoundItem.png">
+  <img src="ScreenShots/postFoundItem.png" alt="Post found item form" width="420" height="200">
+</a> | 
+<a href="ScreenShots/postLostItem.png">
+  <img src="ScreenShots/postLostItem.png" alt="Post lost item form" width="420"  height="200">
+</a> |
 
 ### Error Page
-[![Error page (thumb)](ScreenShots/thumb-ErrorPage.png)](ScreenShots/ErrorPage.png)
+<a href="ScreenShots/ErrorPage.png">
+  <img src="ScreenShots/ErrorPage.png" alt="Error page" width="420">
+</a>
 
-### Database — MongoDB Compass
-[![Database — MongoDB Compass (thumb)](ScreenShots/thumb-FoundItems.png)](ScreenShots/FoundItems.png)
+
+
 
 ---
 
@@ -181,4 +223,4 @@ const router = createBrowserRouter([
 
 This project is released under the **MIT License**.
 
-Maintainer: Your Name — [ahmedklai.connect@gmail.com](mailto:ahmedklai.connect@gmail.com)
+Maintainer: Ahmed Klai — [ahmedklai.connect@gmail.com](mailto:ahmedklai.connect@gmail.com)
