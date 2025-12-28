@@ -1,26 +1,115 @@
 .cardContainer {
-    max-width: 220px;
-    max-height: 220px;
-    border: 1px solid #ddd;
+    width: 250px;
+    height: 300px;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--bg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: 1px solid var(--border);
 }
 
-.cardContainer:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+@media(hover: hover) {
+    .cardContainer:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+    }
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 100px);
+    overflow: hidden;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
 }
 
 .itemImage {
     width: 100%;
-    height: 100px;
+    height: 100%;
     object-fit: cover;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+}
+
+.status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 4px 8px;
+    border-top-left-radius: 4px;
+    color: #fffefe;
+    font-size: 0.65rem;
+    font-weight: bold;
+    opacity: 0.8;
+    text-align: center;
+    width: 20%;
+}
+
+.found {
+    background-color: #2196F3;
+}
+
+.returned {
+    background-color: #4CAF50;
+}
+
+.lost {
+    background-color: #F44336;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+    height: calc(300px - (100% - 100px));
 }
 
 .itemDetails {
-    padding: 0 1rem;
-    border-top: 1px solid #000000;
+    position: relative;
+    padding-top: 0.5rem;
+}
+
+.itemName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    padding: 0 0.75rem;
+}
+
+.reward {
+    position: absolute;
+    right:0;
+    top: 0;
+    padding: 4px 8px;
+    background-color: #ffeb3b;
+    border-bottom-left-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    opacity: 0.8;
+    text-align: center;
+    width: 20%;
+}
+
+.additionalInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    color:  var(--muted-text);
+    font-weight: 500;
+}
+
+.category, .info {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icon {
+    width: 0.9rem;
+    height: 0.9rem;
 }

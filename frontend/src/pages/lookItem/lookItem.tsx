@@ -39,7 +39,7 @@ const lookItem = () => {
                 payload.append('dateOccurred', new Date(formValues.date).toISOString());
             }
             if (formValues.time) {
-                payload.append('timeFound', formValues.time);
+                payload.append('timeOccurred', formValues.time);
             }
 
             const holderObj = {
@@ -57,8 +57,8 @@ const lookItem = () => {
             payload.append('contact', JSON.stringify(contactObj));
 
             const deliveryObj = {
-            possible: formValues.isShipmentPossible === 'yes',
-            details: formValues.additionalNotes || ''
+                possible: formValues.isShipmentPossible === 'yes',
+                details: formValues.additionalNotes || ''
             };
             payload.append('delivery', JSON.stringify(deliveryObj));
 
@@ -109,7 +109,7 @@ const lookItem = () => {
             </select>
 
             <label htmlFor="">Upload Image</label>
-            <input type="file" accept="image/*" {...register('image')} />
+            <input type="file" accept="image/*" {...register('image', { required: true })} />
             <span className={style.imageNote}>Supported formats: JPG, PNG. Max size: 5MB.</span>
 
             <h2 className={style.formSubtitle}>Contact details</h2>
@@ -145,7 +145,7 @@ const lookItem = () => {
             </select>
 
             <label htmlFor="">Address</label>
-            <input type="text" placeholder='Enter your address' {...register('address')} />
+            <input type="text" placeholder='Enter your address' {...register('address', { required: true })} />
 
             <label htmlFor="">Preferred Contact Method</label>
             <select {...register('contactMethod')}>
@@ -166,8 +166,8 @@ const lookItem = () => {
             <label htmlFor="">Location Lost</label>
             <input type="text" placeholder='Enter location where item was lost' {...register('locationLost', { required: true })} />
 
-            <div className={style.timeFoundContainer}>
-                <div className={style.timeFoundItem}>
+            <div className={style.timeOccurredContainer}>
+                <div className={style.timeOccurredItem}>
                     <label htmlFor=''>Time Lost</label>
                     <input type="time" {...register('time')} />
                 </div>

@@ -14,10 +14,9 @@ function parseIfJson(value: any) {
   }
 }
 
-router.post('/postitem', uploadSingle, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/postitem', uploadSingle, async (req: Request, res: Response) => {
   try {
     const body = req.body;
-
     if (!body.title) return res.status(400).json({ error: 'title required' });
 
     const contact = parseIfJson(body.contact);
@@ -29,7 +28,7 @@ router.post('/postitem', uploadSingle, async (req: Request, res: Response, next:
       description: body.description,
       category: body.category,
       dateOccurred: body.dateOccurred ? new Date(body.dateOccurred) : undefined,
-      timeFound: body.timeFound,
+      timeOccurred: body.timeOccurred,
       holder: parseIfJson(body.holder),
       contact: typeof contact === 'object' ? contact : { name: contactName, phone: body.phone, email: body.email },
       delivery: parseIfJson(body.delivery),
@@ -39,24 +38,25 @@ router.post('/postitem', uploadSingle, async (req: Request, res: Response, next:
     };
 
     if (req.file) {
+      const path = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
       doc.image = {
         filename: req.file.filename,
         originalname: req.file.originalname,
         mimetype: req.file.mimetype,
         size: req.file.size,
-        path: req.file.path
+        path: path
       };
     }
 
     const saved = await Item.create(doc);
     return res.status(201).json({ success: true, item: saved });
   } catch (err) {
-    next(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 
-router.post('/lookitem', uploadSingle, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/lookitem', uploadSingle, async (req: Request, res: Response) => {
   try {
     const body = req.body;
 
@@ -71,7 +71,7 @@ router.post('/lookitem', uploadSingle, async (req: Request, res: Response, next:
       description: body.description,
       category: body.category,
       dateOccurred: body.dateOccurred ? new Date(body.dateOccurred) : undefined,
-      timeFound: body.timeFound,
+      timeOccurred: body.timeOccurred,
       holder: parseIfJson(body.holder),
       contact: typeof contact === 'object' ? contact : { name: contactName, phone: body.phone, email: body.email },
       reward: body.reward,
@@ -80,19 +80,30 @@ router.post('/lookitem', uploadSingle, async (req: Request, res: Response, next:
     };
 
     if (req.file) {
+      const path = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
       doc.image = {
         filename: req.file.filename,
         originalname: req.file.originalname,
         mimetype: req.file.mimetype,
         size: req.file.size,
-        path: req.file.path
+        path: path
       };
     }
 
     const saved = await Item.create(doc);
     return res.status(201).json({ success: true, item: saved });
   } catch (err) {
-    next(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+router.get('/items', async (req: Request, res: Response) => {
+  try {
+    const items = await Item.find().sort({ createdAt: -1 }).exec();
+    return res.status(200).json({ items });
+  } catch (err) {
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 

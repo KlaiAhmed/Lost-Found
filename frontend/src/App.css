@@ -1,6 +1,5 @@
 /* Light Mode */
-:root{
-
+:root {
   /* Page */
   --color-page: #F9F8F6;
   --color-cards: #EFE9E3;
@@ -9,7 +8,7 @@
   --color-navbar: #0B1A2B;
   --color-icons: #ffffff;
 
-  /* Btn */
+  /* Buttons */
   --color-text-primary: #333333;
   --color-btn-primary: #B89F7F;
   --color-btn-primary-hover: #07121a;
@@ -18,33 +17,31 @@
   --color-btn-tertiary: #D9CFC7;
   --color-btn-tertiary-hover: #C0B6AD;
 
-  /* text */
+  /* Text */
   --text: #121212;
   --muted-text: #6B6159;
 
-  /* semantic */
+  /* Semantic */
   --success: #2DBE6E;
   --warning: #FFB020;
   --error:   #D64545;
 
-  /*forms*/
+  /* Forms / UI */
   --bg: #ffffff;
-  
   --muted: #374151;
   --muted-200: #f3f4f6;
   --muted-50: #f8fafc;
-
   --input-bg: #ffffff;
   --border: #e5e7eb;
-
   --button-text: #ffffff;
 
+  /* Shadows / Elevation */
   --shadow-elev-1: rgba(16, 24, 40, 0.06);
   --shadow-elev-2: rgba(17, 24, 39, 0.06);
 }
 
 /* Dark Mode */
-:root[data-theme="dark"]{
+:root[data-theme="dark"] {
   /* Page */
   --color-page: #07121a;
   --color-cards: #121414;
@@ -53,7 +50,7 @@
   --color-navbar: #07121a;
   --color-icons: #333333;
 
-  /* Btn */
+  /* Buttons */
   --color-text-primary: #EDEDED;
   --color-btn-primary: #B89F7F;
   --color-btn-primary-hover: #153042;
@@ -71,19 +68,16 @@
   --warning: #FFBF47;
   --error: #FF6B6B;
 
-  /* Forms */
+  /* Forms / UI */
   --bg: #0b1220;
-
   --muted: #9ca3af;
   --muted-200: #1f2933;
   --muted-50: #111827;
-
   --input-bg: #0f172a;
   --border: #243044;
-
   --button-text: #0b1220;
 
+  /* Shadows / Elevation */
   --shadow-elev-1: rgba(0, 0, 0, 0.45);
   --shadow-elev-2: rgba(0, 0, 0, 0.6);
 }
-

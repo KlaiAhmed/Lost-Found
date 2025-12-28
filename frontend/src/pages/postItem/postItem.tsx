@@ -33,14 +33,14 @@ const postItem = () => {
             const payload = new FormData();
 
             payload.append('title', formValues.itemName);
-            payload.append('description', formValues.description || '');
-            payload.append('category', formValues.category || '');
+            payload.append('description', formValues.description);
+            payload.append('category', formValues.category);
 
             if (formValues.date) {
                 payload.append('dateOccurred', new Date(formValues.date).toISOString());
             }
             if (formValues.time) {
-                payload.append('timeFound', formValues.time);
+                payload.append('timeOccurred', formValues.time);
             }
 
             const holderObj = {
@@ -58,8 +58,8 @@ const postItem = () => {
             payload.append('contact', JSON.stringify(contactObj));
 
             const deliveryObj = {
-            possible: formValues.isShipmentPossible === 'yes',
-            details: formValues.additionalNotes || ''
+                possible: formValues.isShipmentPossible === 'yes',
+                details: formValues.additionalNotes || ''
             };
             payload.append('delivery', JSON.stringify(deliveryObj));
 
@@ -110,7 +110,7 @@ const postItem = () => {
             </select>
 
             <label htmlFor="">Upload Image</label>
-            <input type="file" accept="image/*" {...register('image')} />
+            <input type="file" accept="image/*" {...register('image', { required: true })} />
             <span className={style.imageNote}>Supported formats: JPG, PNG. Max size: 5MB.</span>
 
             <h2 className={style.formSubtitle}>Contact details</h2>
@@ -146,7 +146,7 @@ const postItem = () => {
             </select>
 
             <label htmlFor="">Address</label>
-            <input type="text" placeholder='Enter your address' {...register('address')} />
+            <input type="text" placeholder='Enter your address' {...register('address', { required: true })} />
 
             <label htmlFor="">Preferred Contact Method</label>
             <select {...register('contactMethod')}>
@@ -167,8 +167,8 @@ const postItem = () => {
             <label htmlFor="">Location Found</label>
             <input type="text" placeholder='Enter location where item was found' {...register('locationFound', { required: true })} />
 
-            <div className={style.timeFoundContainer}>
-                <div className={style.timeFoundItem}>
+            <div className={style.timeOccurredContainer}>
+                <div className={style.timeOccurredItem}>
                     <label htmlFor=''>Time Found</label>
                     <input type="time" {...register('time')} />
                 </div>

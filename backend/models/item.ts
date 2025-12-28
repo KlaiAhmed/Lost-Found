@@ -68,7 +68,7 @@ const ItemSchema = new mongoose.Schema({
         enum: ['found','lost','returned'], 
     },
     createdAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 ItemSchema.index({ status: 1, location: 'text', createdAt: -1 });
 
