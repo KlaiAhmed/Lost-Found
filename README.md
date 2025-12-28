@@ -1,12 +1,8 @@
 # Lost & Found
 
-A concise README for a TypeScript + MERN lost-and-found application with dark/light/system theming and optional rewards for returned items.
-
----
-
 ## Project overview
 
-A full‑stack application letting users post **found** items (optionally offering a reward) and **lost** reports. Finders can upload photos and location details; owners can search, match, and request contact or file claims. The codebase is split into `backend/` (Express + TypeScript + Mongoose) and `frontend/` (React + TypeScript, `createBrowserRouter`).
+A full‑stack application letting users post **found** items (optionally offering a reward) and **lost** reports. Finders can upload photos and location details; owners can search, match, and request contact or file claims. The codebase is split into `backend/` (Express + TypeScript + Mongoose) and `frontend/` (React + TypeScript).
 
 ---
 
@@ -14,8 +10,6 @@ A full‑stack application letting users post **found** items (optionally offeri
 
 * Post found items (images, description, location, optional reward)
 * Post lost item reports and browse found items
-* Search and basic matching
-* Claim workflow with evidence uploads
 * Light / Dark / System theme with persistent user preference
 
 ---
@@ -58,7 +52,7 @@ Project structure :
 ├─ .env
 └─ vite.config.ts
 
-/ScreenShots        #This repository includes four images used by the Lost & Found web app
+/ScreenShots      #This repository includes screenshots that demonstrate  the Lost & Found web app
 ```
 
 
@@ -77,7 +71,7 @@ npm install
 npm run dev
 
 # client
-cd ../frontend
+cd frontend
 npm install
 npm run dev
 ```
