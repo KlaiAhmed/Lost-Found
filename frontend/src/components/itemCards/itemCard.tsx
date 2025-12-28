@@ -3,7 +3,7 @@ import calculateTimePassed  from '../../utils/calculateTimePassed';
 import Icon from '../../utils/getIcon';
 
 type ItemCardProps = {
-    reward?: string;
+    reward?: number;
     title: string;
     category: string;
     createdAt: string;
@@ -26,7 +26,7 @@ const statusStyles = (status: string) => {
 
 const ItemCard = ({ item }: Props) => {
     const { reward, title, category, createdAt, status } = item;
-    const rewardText = item.reward ? `${item.reward} Reward` : "10000Dt";
+    const croppedReward = reward && Number.isFinite(reward) && status.toLowerCase() !== 'lost' ? (String(reward).length > 5 ? String(reward).slice(0, 4) + '..' : String(reward)) : null;
     const location= item.holder.city 
     const imgSrc = item.image.path
     const timePassed = calculateTimePassed(createdAt);
@@ -43,8 +43,8 @@ const ItemCard = ({ item }: Props) => {
                 </div>
                 <div className={style.infoContainer}>
                     <div className={style.itemDetails}>
-                        {rewardText &&
-                            <span className={style.reward}>{rewardText}</span>
+                        {croppedReward &&
+                            <span className={style.reward}>{croppedReward}TND</span>
                         }
                         <span className={style.itemName}>{croppedTitle}</span>
                     </div>

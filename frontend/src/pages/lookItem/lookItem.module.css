@@ -45,6 +45,7 @@
 .formContainer input[type="date"],
 .formContainer input[type="file"],
 .formContainer input[type="tel"],
+.formContainer input[type="number"],
 .formContainer select,
 .formContainer textarea {
   width: 100%;

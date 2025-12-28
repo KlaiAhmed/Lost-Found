@@ -56,8 +56,9 @@ const ItemSchema = new mongoose.Schema({
         details: String
     },
     reward: { 
-        type: String, 
-        required: function(this) { return this.status === 'lost' ? false : false; } 
+        type: Number,
+        min: 0,
+        default: 0 
     },
     holder: HolderSchema,
     contact: ContactSchema,

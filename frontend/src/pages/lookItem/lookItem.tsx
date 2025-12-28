@@ -18,7 +18,7 @@ const lookItem = () => {
       description: '',
       category: '',
       locationLost: '',
-      reward:'',
+      reward: 0,
       additionalNotes: '',
       image: '',
       city: '',
@@ -89,14 +89,14 @@ const lookItem = () => {
             <h1 className={style.formTitle}>Look for lost Items</h1>
 
             <h2 className={style.formSubtitle}>Item details</h2>
-            <label htmlFor="">Item Name</label>
+            <label >Item Name</label>
             <input type="text" placeholder='Enter item name' {...register('itemName', { required: true })} />
 
-            <label htmlFor="">Description</label>
+            <label >Description</label>
             <textarea placeholder='Enter item description' {...register('description', { required: true })}></textarea>
             <p className={style.descriptionNote}>Include identifying marks, colour, brand, approximate size.</p>
 
-            <label htmlFor="">Category</label>
+            <label >Category</label>
             <select {...register('category', { required: true })}>
                 <option value="" hidden>Select Category</option>
                 <option value="electronics">Electronics</option>
@@ -108,12 +108,12 @@ const lookItem = () => {
                 <option value="others">Others</option>
             </select>
 
-            <label htmlFor="">Upload Image</label>
+            <label >Upload Image</label>
             <input type="file" accept="image/*" {...register('image', { required: true })} />
             <span className={style.imageNote}>Supported formats: JPG, PNG. Max size: 5MB.</span>
 
             <h2 className={style.formSubtitle}>Contact details</h2>
-            <label htmlFor="">Name</label>
+            <label >Name</label>
             <input type="text" placeholder='Enter your name' {...register('contactName', { required: true })} />
 
             <select {...register('city', { required: true })}>
@@ -144,10 +144,10 @@ const lookItem = () => {
                 <option value="Zaghouan">Zaghouan</option>
             </select>
 
-            <label htmlFor="">Address</label>
+            <label >Address</label>
             <input type="text" placeholder='Enter your address' {...register('address', { required: true })} />
 
-            <label htmlFor="">Preferred Contact Method</label>
+            <label >Preferred Contact Method</label>
             <select {...register('contactMethod')}>
                 <option value="" hidden >Select Contact Method</option>
                 <option value="phone">Phone</option>
@@ -155,15 +155,15 @@ const lookItem = () => {
                 <option value="text">Text Message</option>
             </select>
 
-            <label htmlFor="">Phone</label>
+            <label >Phone</label>
             <input type="text" placeholder='Enter your phone number' {...register('phone', { required: true })} />
 
-            <label htmlFor="">Email</label>
+            <label >Email</label>
             <input type="email" placeholder='Enter your email address' {...register('email')} />
 
             <h2 className={style.formSubtitle}>Details</h2>
 
-            <label htmlFor="">Location Lost</label>
+            <label >Location Lost</label>
             <input type="text" placeholder='Enter location where item was lost' {...register('locationLost', { required: true })} />
 
             <div className={style.timeOccurredContainer}>
@@ -173,17 +173,18 @@ const lookItem = () => {
                 </div>
             
                 <div className={style.dateOccurredItem}>
-                    <label htmlFor="">Date Lost</label>
+                    <label >Date Lost</label>
                     <input type="date" {...register('date')} />
                 </div>
             </div>
 
             <h2 className={style.formSubtitle}>Additional details</h2>
 
-            <label htmlFor="">Reward</label>
-            <input type="text" placeholder='Enter reward details if any' {...register('reward')} />
+            <label >Reward</label>
+            <input type="number"  min={0} placeholder='Reward who finds the item' {...register('reward')} />
+            <p className={style.descriptionNote}>Enter reward details if any in TND, 0 means no reward.</p>
 
-            <label htmlFor="">Additional Notes</label>
+            <label >Additional Notes</label>
             <textarea placeholder='Enter any additional notes' {...register('additionalNotes')}></textarea>
 
             <div className={style.formActions}>
