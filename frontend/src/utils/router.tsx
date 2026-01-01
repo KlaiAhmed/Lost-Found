@@ -5,6 +5,7 @@ import LookItem from "../pages/lookItem/lookItem";
 import PostItem from "../pages/postItem/postItem";
 import ItemsPage from "../pages/items/items";
 import NotFound from "../pages/404/404";
+import LoginPage from "../pages/login/login";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
         element: <ItemsPage />
       }
     ]
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <NotFound />
   }
 ]);
 

@@ -66,7 +66,7 @@ const Navbar = () => {
                 :<Icon name="sunmoon" className={style.themeIcon}/>
                 }
               </button>
-              <button className={style.signup}>Sign In</button>
+              <Link to="/login" className={style.signin}>Sign In</Link>
             </div>
           </div>
           {isThemeWindowOpen && ( <ThemeWindow handleThemeChange={handleThemeChange} theme={theme} ref={themeSwitchWindowRef}  onClickOutside={() => setIsThemeWindowOpen(false)} /> )}

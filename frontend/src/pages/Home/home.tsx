@@ -8,7 +8,7 @@ const Home = () => {
         <>
             <div className={style.homePageContainer}>
                 <h1>A Community-Driven Lost & Found Platform Built on Trust and Rewards</h1>
-                <p>Post found items or search for things you’ve lost. Connect securely with owners and offer or claim rewards for successful returns</p>
+                <p>Lost something? Post it. Found something? Return it. Earn rewards and build trust.</p>
 
 
             

@@ -101,7 +101,7 @@
     color: #ffffff;
 }
 
-.signup{
+.signin{
     padding: 0.5rem 1rem;
     background-color: #B89F7F;
     border: none;
@@ -109,4 +109,5 @@
     color: white;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
 }
