@@ -83,3 +83,13 @@
   --shadow-elev-1: rgba(0, 0, 0, 0.45);
   --shadow-elev-2: rgba(0, 0, 0, 0.6);
 }
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--bg) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
