@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { uploadSingle } from '../middlewares/upload';
 import Item from '../models/item';
 
-const router = express.Router();
+const itemRouter = express.Router();
 
 function parseIfJson(value: any) {
   if (!value) return undefined;
@@ -14,7 +14,7 @@ function parseIfJson(value: any) {
   }
 }
 
-router.post('/postitem', uploadSingle, async (req: Request, res: Response) => {
+itemRouter.post('/postitem', uploadSingle, async (req: Request, res: Response) => {
   try {
     const body = req.body;
     if (!body.title) return res.status(400).json({ error: 'title required' });
@@ -56,7 +56,7 @@ router.post('/postitem', uploadSingle, async (req: Request, res: Response) => {
 });
 
 
-router.post('/lookitem', uploadSingle, async (req: Request, res: Response) => {
+itemRouter.post('/lookitem', uploadSingle, async (req: Request, res: Response) => {
   try {
     const body = req.body;
 
@@ -98,7 +98,7 @@ router.post('/lookitem', uploadSingle, async (req: Request, res: Response) => {
 });
 
 
-router.get('/items', async (req: Request, res: Response) => {
+itemRouter.get('/items', async (req: Request, res: Response) => {
   try {
     const items = await Item.find().sort({ createdAt: -1 }).exec();
     return res.status(200).json({ items });
@@ -107,4 +107,4 @@ router.get('/items', async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+export default itemRouter;
