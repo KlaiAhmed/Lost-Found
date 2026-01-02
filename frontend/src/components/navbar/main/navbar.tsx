@@ -5,10 +5,14 @@ import useTheme from '../../../hooks/useTheme';
 import ThemeWindow from '../themeSwitchWindow/themeWindow';
 import { useState, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import SearchOverlay from '../searchOverlay/searchOverlay';
+import { AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
 
   const { theme, setTheme } = useTheme();
+  const [ overlayOpen, setOverlayOpen ] = useState(false);
+  const [ searchTerm, setSearchTerm ] = useState('');
 
   const themeSwitchWindowRef = useRef(null);
 
@@ -57,7 +61,7 @@ const Navbar = () => {
           </div>
 
             <div className={style.navActions}>
-              <button className={style.searchButton}>
+              <button className={style.searchButton} onClick={() => setOverlayOpen(true)}>
                 <Icon name="search" className={style.searchIcon}/>
               </button>
               <button className={style.themeToggle} onClick={toggleThemeWindow}>
@@ -71,6 +75,9 @@ const Navbar = () => {
           </div>
           {isThemeWindowOpen && ( <ThemeWindow handleThemeChange={handleThemeChange} theme={theme} ref={themeSwitchWindowRef}  onClickOutside={() => setIsThemeWindowOpen(false)} /> )}
         </nav>
+        <AnimatePresence mode='wait'>
+          {overlayOpen && <SearchOverlay searchTerm={searchTerm} setSearchTerm={setSearchTerm} onClose={() => setOverlayOpen(false)} />}
+        </AnimatePresence>
     </>
   );
 };
