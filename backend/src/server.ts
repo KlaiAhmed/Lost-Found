@@ -15,6 +15,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api', foundItemsRouter);
 
+app.get('/api/health', (req, res) => {
+  res.send('API is running...');
+});
+
 
 const PORT = process.env.PORT || 5000;
 

@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-export const UPLOAD_DIR = path.resolve(process.cwd(), 'uploads');
+export const UPLOAD_DIR = path.resolve(process.cwd(), 'C:\\WorkSpace\\Fullstack\\projet\\backend\\src\\uploads');
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 const upload = multer({

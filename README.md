@@ -28,31 +28,38 @@ Project structure :
 
 ```
 /backend
-  ├─ config
-  ├─ middlewares
-  ├─ models
-  ├─ routes
-  ├─ uploads
-  ├─ .env
-  └─ server.ts
-
-/frontend
-├─ public
 ├─ src
-│ ├─ assets
-│ ├─ components
-│ ├─ hooks
-│ ├─ pages
-│ ├─ utils 
-│ ├─ styles.d.ts 
-│ ├─ App.tsx 
-│ ├─ main.tsx 
-│ ├─ index.css
-│ └─ App.css
-├─ .env
+│ ├─ config        # Environment variables, database connection logic
+│ ├─ controllers   # Request handling 
+│ ├─ middlewares   # Validation, rate limiting, image upload ...
+│ ├─ models        # Database schemas  
+│ ├─ routes        # API route definitions
+│ ├─ schemas       # Zod schemas for validation
+│ ├─ services      # LOGIC (DB interactions)
+│ ├─ utils         # Helper functions
+│ └─ server.ts     # Main
+├─ uploads         # This repository includes items photos
+├─ .env            # Secrets
+├─ .gitignore
 └─ vite.config.ts
 
-/ScreenShots      #This repository includes screenshots that demonstrate  the Lost & Found web app
+/frontend
+├── public
+├── src
+│   ├── assets         
+│   ├── components     # Reusable UI building blocks (Buttons, Inputs, Modals)
+│   ├── hooks          # Custom React hooks for shared logic
+│   ├── pages          # Top-level route components (Home, Items, Signin)
+│   ├── utils          # Helper functions
+│   ├── styles.d.ts    # TypeScript definitions for CSS modules
+│   ├── App.tsx        # Main application component and routing configuration
+│   ├── main.tsx       # Application entry point
+│   ├── index.css      # Global styles, CSS resets
+│   └── App.css        # Root variables 
+├── .env               # Environment variables
+└── vite.config.ts
+
+/ScreenShots       #This repository includes screenshots that demonstrate  the Lost & Found web app
 ```
 
 
@@ -87,6 +94,8 @@ Example `backend/.env`:
 ```
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/lost&found
+saltRounds=10
+JWT_SECRET=your_jwt_secret_key
 ```
 
 Example `frontend/.env` (Vite):

@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { uploadSingle } from '../middlewares/upload';
 import Item from '../models/item';
 
@@ -38,7 +38,7 @@ itemRouter.post('/postitem', uploadSingle, async (req: Request, res: Response) =
     };
 
     if (req.file) {
-      const path = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      const path = `${req.protocol}://${req.get('host')}/src/uploads/${req.file.filename}`;
       doc.image = {
         filename: req.file.filename,
         originalname: req.file.originalname,
@@ -80,7 +80,7 @@ itemRouter.post('/lookitem', uploadSingle, async (req: Request, res: Response) =
     };
 
     if (req.file) {
-      const path = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      const path = `${req.protocol}://${req.get('host')}/src/uploads/${req.file.filename}`;
       doc.image = {
         filename: req.file.filename,
         originalname: req.file.originalname,

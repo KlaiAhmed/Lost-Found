@@ -1,7 +1,7 @@
 import express from "express";
 const userRouter= express.Router();
 
-import validate from "../middlewares/validateData";
+import validate from "../../middlewares/validateData";
 import { loginSchema, userSchema } from "../schemas/userSchema";
 
 import { registerUser } from "../services/user";
