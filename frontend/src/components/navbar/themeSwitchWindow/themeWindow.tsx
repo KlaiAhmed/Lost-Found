@@ -5,13 +5,13 @@ import useClickOutside from '../../../hooks/useClickOutside';
 type ThemeWindowProps = {
   handleThemeChange: (themePref: "dark" | "light" | "system") => void;
   theme: "dark" | "light" | "system";
-  ref?: React.Ref<HTMLDivElement>;
+  ref?:  React.Ref<HTMLDivElement>;
   onClickOutside?: () => void;
 }
 
 const ThemeWindow = ({ handleThemeChange , theme, ref , onClickOutside }: ThemeWindowProps) => {
 
-  useClickOutside({ref: ref, onClickOutside: onClickOutside});
+  useClickOutside({ref: ref as React.RefObject<HTMLElement>, onClickOutside: onClickOutside});
 
   return (
         <>
@@ -27,7 +27,7 @@ const ThemeWindow = ({ handleThemeChange , theme, ref , onClickOutside }: ThemeW
                 {theme === "dark" &&<Icon name="tick" className={style.tick} />}
               </button>
               <button onClick={() => handleThemeChange("system")} className={style.button} >
-                <Icon name="sunmoon" className={style.icon} />
+                <Icon name="sunmoon" className={`${style.icon} ${style.sunmoon}`} />
                 System Default
                 {theme === "system" &&<Icon name="tick" className={style.tick} />}
               </button>

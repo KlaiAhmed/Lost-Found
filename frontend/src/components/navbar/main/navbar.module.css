@@ -111,3 +111,20 @@
     font-weight: bold;
     text-decoration: none;
 }
+
+.userProfile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #1E293B;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.userIcon{
+    cursor: pointer;
+    width: 21px;
+    height: 21px;
+    color: #ffffff;
+}

@@ -3,20 +3,24 @@ import Logo from '../../../assets/logo.png';
 import Icon from '../../../utils/getIcon';
 import useTheme from '../../../hooks/useTheme';
 import ThemeWindow from '../themeSwitchWindow/themeWindow';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import SearchOverlay from '../searchOverlay/searchOverlay';
 import { AnimatePresence } from 'framer-motion';
 import { AuthContext } from '../../../utils/authContext';
+import ProfileDropDown from '../profileDropDown/profileDropDown';
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
+  
   const [ overlayOpen, setOverlayOpen ] = useState(false);
   const [ searchTerm, setSearchTerm ] = useState('');
+  const [ isProfileDropDownOpen, setProfileDropDownOpen ] = useState(false);
 
-  const { user } =  AuthContext;
+  const { user } = useContext(AuthContext);
 
   const themeSwitchWindowRef = useRef(null);
+  const profileDropDownRef = useRef(null);
 
   const handleThemeChange = (themePref: "dark" | "light" | "system") => {
     setTheme(themePref);
@@ -73,17 +77,16 @@ const Navbar = () => {
                 }
               </button>
               {user ? (
-                <Link to="/profile" className={style.profileLink}>
-                  <Icon name="user" className={style.userIcon}/>
-                  <span className={style.username}>{user.username}</span>
-                </Link>
-              
+                <div className={style.userProfile} onClick={() => setProfileDropDownOpen(!isProfileDropDownOpen)}>
+                  <Icon name="user" className={style.userIcon} />
+                </div>
                 ) :
                 <Link to="/signin" className={style.signin}>Sign In</Link>
               }
             </div>
           </div>
           {isThemeWindowOpen && ( <ThemeWindow handleThemeChange={handleThemeChange} theme={theme} ref={themeSwitchWindowRef}  onClickOutside={() => setIsThemeWindowOpen(false)} /> )}
+          {isProfileDropDownOpen && ( <ProfileDropDown ref={profileDropDownRef}  onClickOutside={() => setProfileDropDownOpen(false)} /> )}  
         </nav>
         <AnimatePresence mode='wait'>
           {overlayOpen && <SearchOverlay searchTerm={searchTerm} setSearchTerm={setSearchTerm} onClose={() => setOverlayOpen(false)} />}
