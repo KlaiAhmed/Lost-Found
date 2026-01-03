@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 import getDeviceInfo from '../utils/deviceInfo';
+import ms from '../utils/timeEnMs';
 /* ------------------------------------------------------------------ */
 /* Config */
 /* ------------------------------------------------------------------ */
@@ -115,11 +116,17 @@ const loginUserService = async ({email,password,rememberMe = false,userAgent,exi
     user.sessions.shift();
   }
 
+  const refreshExpiresMs = rememberMe? ms(JWT_REFRESH_EXPIRES_REMEMBER): ms(JWT_REFRESH_EXPIRES_DEFAULT);
+
+  const expiresAt = new Date(Date.now() + refreshExpiresMs);
+
+
   user.sessions.push({
     sessionId,
     refreshjwtidHash: await bcrypt.hash(refreshJwtId, BCRYPT_SALT_ROUNDS),
     deviceInfo: getDeviceInfo(userAgent),
     rememberMe,
+    expiresAt,
   });
 
   await user.save();

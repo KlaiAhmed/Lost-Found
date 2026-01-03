@@ -15,6 +15,11 @@ const SessionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    expiresAt: {
+      type: Date,
+      required: true,
+      index: { expireAfterSeconds: 0 },
+    },
     deviceInfo: {
       type: DeviceInfo,
       required: true,
@@ -35,7 +40,6 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-
     email: {
       type: String,
       required: true,
@@ -44,28 +48,23 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
-
     password: {
       type: String,
       required: true,
       select: false,
     },
-
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
-
     lastLogin: {
       type: Date,
     },
-
     failedLoginAttempts: {
       type: Number,
       default: 0,
     },
-
     lockUntil: {
       type: Date,
     },
