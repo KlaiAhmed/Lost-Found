@@ -1,30 +1,20 @@
 import express from "express";
 const userRouter= express.Router();
 
-import validate from "../../middlewares/validateData";
-import { loginSchema, userSchema } from "../schemas/userSchema";
+import validate from "../middlewares/validateData";
+import rateLimit from "../middlewares/rateLimiter";
+import { loginSchema, registerSchema } from "../schemas/userSchema";
 
-import { registerUser } from "../services/user";
+import { registerUser, loginUser, logoutUser, refreshTokenController } from "../controllers/userAuth";
 
+const TenMin= 10 * 60 * 1000;
 
-userRouter.post('/auth/signin',validate(loginSchema) ,async (req, res) => {
-  try {
+userRouter.post('/auth/signin', rateLimit(5, TenMin) , validate(loginSchema) ,loginUser);
 
-    return res.status(200).json({ success: true, message: 'Login successful' });
-  } catch (err) {
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
+userRouter.post('/auth/signup', rateLimit(5, TenMin), validate(registerSchema), registerUser);
 
-userRouter.post('/auth/signup', validate(userSchema), registerUser);
+userRouter.post('/auth/logout', rateLimit(5, TenMin), logoutUser);
 
-userRouter.post('/auth/logout', async (req, res) => {
-  try {
-    // Logout logic would go here
-    return res.status(200).json({ success: true, message: 'Logout successful' });
-  } catch (err) {
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
+userRouter.post('/auth/refresh-token', rateLimit(10, TenMin), refreshTokenController);
 
 export default userRouter;

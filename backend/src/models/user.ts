@@ -1,43 +1,80 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import DeviceInfo from './deviceInfo';
 
-const UserSchema = new mongoose.Schema({
-    username: { 
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+const SessionSchema = new mongoose.Schema(
+  {
+    sessionId: {
+      type: String,
+      required: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    refreshjwtidHash: {
+      type: String,
+      required: true,
+    },
+    deviceInfo: {
+      type: DeviceInfo,
+      required: true,
+    },
+    rememberMe: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { _id: false }
+);
+
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      index: true,
     },
+
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+      select: false,
     },
+
     role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
     },
-    LastLogin: { 
-        type: Date,
-        default: Date.now 
+
+    lastLogin: {
+      type: Date,
     },
-    failedLoginAttempts: { 
-        type: Number, 
-        default: 0 
+
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
     },
-    hashedRefreshToken: { 
-        type: String,
+
+    lockUntil: {
+      type: Date,
     },
-    lockUntil: { 
-        type: Date ,
-        default: null
-    }
-}, { timestamps: true });
+    sessions: {
+      type: [SessionSchema],
+      default: [],
+    },
+  },
+  { timestamps: true }
+);
 
 export const User = mongoose.model('User', UserSchema);

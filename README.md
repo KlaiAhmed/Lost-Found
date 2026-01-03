@@ -67,7 +67,7 @@ Project structure :
 
 ## Getting started (development)
 
-**Prerequisites:** Node, npm, MongoDB URI
+**Prerequisites:** Node, npm, .env variables
 
 **Install & run**
 
@@ -146,10 +146,23 @@ VITE_API_BASE_URL=http://localhost:5000
 
 Base path: `/api`
 
+* `GET /health`    — verify api running
+
+**Items endpoints**
+
 * `POST /postitem` — post found item
 * `POST /lookitem` — look for lost items
 * `GET /items`     — get all items
 
+**User endpoints**  
+* `POST /auth/singin`         — create user
+* `POST /auth/signup`         — Login user session
+* `POST /auth/logout`         — logout user from session
+* `POST /auth/refresh-token`  — refresh user tokens
+* `GET  /me`             — get user data (require active user session)
+* `GET /user:id`        — get user by id
+* `GET  /users`           — get all users data
+  
 ---
 
 ## Client routing (createBrowserRouter) — example
