@@ -1,0 +1,145 @@
+.footer_container {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-page);
+    margin-top: 50px;
+}
+
+.footer_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 30px 60px;
+}
+
+.footer_container h4{
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list a {
+    color: var(--muted-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.2s;
+    padding-bottom: 5px;
+    width: max-content;
+    text-decoration: none;
+}
+
+@media(hover:hover){
+    .list a:hover {
+     color: var(--text);
+    }
+
+    .list a:hover::after {
+        width: 100%;
+        transform-origin: bottom left;
+    }
+}
+
+.list a::after {
+    background: var(--text);
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    transition: width 0.2s ease-out;
+}
+
+.social_list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    fill: var(--text);
+}
+
+.social_list a{
+    text-decoration: none;
+}
+
+.footer_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-border);
+    padding: 20px 60px;
+    color: var(--text);
+}
+
+.p1 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.p2 {
+    font-size: 0.8rem;
+}
+
+.p2 a {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--muted-text);
+    text-decoration: none;
+}
+
+@media(max-width: 768px) {
+    .footer_content {
+        grid-template-columns: 1fr 1fr;
+        padding: 20px 30px;
+    }
+
+    .footer_bottom {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px 30px;
+    }
+
+    h4{
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer_content {
+        grid-template-columns: 1fr;
+        padding: 20px 15px;
+    }
+
+    .list {
+        align-items: center;
+        padding-top: 20px;
+    }
+
+    .social h4{
+        text-align: center;
+    }
+
+    .social_list {
+        justify-content: center;
+    }
+
+    .footer_bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .p1 {
+        font-size: 0.8rem;
+    }
+
+    .p2 {
+        font-size: 0.6rem;
+    }
+    
+}

@@ -35,6 +35,7 @@
   --border: #e5e7eb;
   --button-text: #ffffff;
   --icon-bg: #D9CFC7;
+  --search-overlay-bg: #0B1A2B;
 
   /* Shadows / Elevation */
   --shadow-elev-1: rgba(16, 24, 40, 0.06);
@@ -78,8 +79,19 @@
   --border: #243044;
   --button-text: #0b1220;
   --icon-bg: #333433;
+  --search-overlay-bg: #0b1220;
 
   /* Shadows / Elevation */
   --shadow-elev-1: rgba(0, 0, 0, 0.45);
   --shadow-elev-2: rgba(0, 0, 0, 0.6);
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--bg) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  transition: background-color 9999s ease-in-out 0s;
 }

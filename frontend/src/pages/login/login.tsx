@@ -1,9 +1,44 @@
 import style from './login.module.css';
 import Icon from '../../utils/getIcon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import loginFormSchema from '../../utils/loginFormSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 const LoginPage = () => {
+
+    const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const { 
+        register, 
+        handleSubmit,
+        formState: { errors } 
+    } = useForm({
+        resolver: zodResolver(loginFormSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+            rememberMe: false,
+        }
+    });
+
+    const onSubmit = (data: any) => {
+        axios.post('/api/login', data)
+            .then(response => {
+                console.log('Login successful:', response.data);
+                navigate('/');
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+            });
+    }
+
+    const btnDisabled = Object.keys(errors).length > 0;
 
     return (
         <>
@@ -11,7 +46,7 @@ const LoginPage = () => {
                 <section className={style.textBox}>
                     <Link to="/"><Icon name="backArrow" className={style.backArrow} /></Link>
                     <h1>Welcome Back!</h1>
-                    <p>Turn Lost into Found, a community that helps, connects securely, and rewards honesty</p>
+                    <p className={style.p}>Turn Lost into Found, a community that helps, connects securely, and rewards honesty</p>
                     <ul className={style.featuresList}>
                         <li><Icon name="fancySearch" className={style.icon} /> Report lost items and help others find theirs</li>
                         <li><Icon name="handshake" className={style.icon} /> Connect with a trustworthy community</li>
@@ -20,18 +55,43 @@ const LoginPage = () => {
                 </section>
                 <section className={style.loginBox}>
                     <h2>Sign In</h2>
-                    <p>Enter your credentials to access your account</p>
-                    <form className={style.loginForm}>
+                    <p className={style.p}>Enter your credentials to access your account</p>
+                    <form className={style.loginForm} onSubmit={handleSubmit(onSubmit)}>
                         <div className={style.inputGroup}>
-                            <input type="text" id="email" name="email" required />
+                            <input type="text" id="email" {...register('email')}  placeholder='' />
                             <label htmlFor="email">Email</label>
                         </div>
+                        {errors.email && (
+                            <div className={style.errorContainer}>
+                                <Icon name="warning" className={style.warningIcon} />
+                                <p className={style.errorMessage}>{errors.email.message}</p>
+                            </div>
+                        )}
+
                         <div className={style.inputGroup}>
-                            <input type="password" id="password" name="password" autoComplete='off' required />
+                            <input type={showPassword ? "text" : "password"} id="password" {...register('password')} autoComplete='off'  placeholder='' />
                             <label htmlFor="password">Password</label>
+                            <span onClick={() => setShowPassword(!showPassword)} className={style.passwordToggle} >
+                                {showPassword ? 
+                                <Icon name="eyeOff" className={style.eyeIcon} />
+                                : 
+                                <Icon name="eye" className={style.eyeIcon} />
+                                }
+                            </span>
+                        </div>
+                        {errors.password && (
+                            <div className={style.errorContainer}>
+                                <Icon name="warning" className={style.warningIcon} />
+                                <p className={style.errorMessage}>{errors.password.message}</p>
+                            </div>
+                        )}
+
+                        <div className={style.rememberMe}>
+                            <input type="checkbox" id="rememberMe" {...register('rememberMe')} />
+                            <label htmlFor="rememberMe">Remember Me</label>
                         </div>
 
-                        <button type="submit" disabled>Login</button>
+                        <button type="submit" disabled={btnDisabled}>Login</button>
                     </form>
                     <span className={style.signUp}>Don't have an account? <Link to="/signup" className={style.signUpLink}>Sign Up</Link></span>
                 </section>
