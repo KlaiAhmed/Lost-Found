@@ -2,7 +2,7 @@ import style from './register.module.css';
 import Icon from '../../utils/getIcon';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import loginFormSchema from '../../utils/loginFormSchema';
+import { registerFormSchema } from '../../utils/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
@@ -13,32 +13,33 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
-    const [loginError, setLoginError] = useState<string | null>(null);
+    const [registerError, setRegisterError] = useState<string | null>(null);
 
     const { 
         register, 
         handleSubmit,
         formState: { errors } 
     } = useForm({
-        resolver: zodResolver(loginFormSchema),
+        resolver: zodResolver(registerFormSchema),
         defaultValues: {
+            username: '',
             email: '',
             password: '',
-            rememberMe: false,
+            confirmPassword: '',
         }
     });
 
     const onSubmit = (data: any) => {
         console.log('Form Data:', data);
-        axios.post(import.meta.env.VITE_API_URL + '/api/auth/signin', data, {withCredentials: true})
+        axios.post(import.meta.env.VITE_API_URL + '/api/auth/signup', data, {withCredentials: true})
             .then(response => {
-                console.log('Login successful:', response.data);
-                setLoginError(null);
-                navigate('/');
+                console.log('Registration successful:', response.data);
+                setRegisterError(null);
+                navigate('/', { replace: true });
             })
             .catch(error => {
-                console.error('Login error:', error);
-                setLoginError(error.response?.data?.message || 'Login failed');
+                console.error('Registration error:', error);
+                setRegisterError(error.response?.data?.message || 'Registration failed');
             });
     };
 
@@ -46,10 +47,10 @@ const RegisterPage = () => {
 
     return (
         <>
-            <div className={style.loginContainer}>
+            <div className={style.registerContainer}>
                 <section className={style.textBox}>
                     <Link to="/"><Icon name="backArrow" className={style.backArrow} /></Link>
-                    <h1>Welcome Back!</h1>
+                    <h1>Discover Lost & Found</h1>
                     <p className={style.p}>Turn Lost into Found, a community that helps, connects securely, and rewards honesty</p>
                     <ul className={style.featuresList}>
                         <li><Icon name="fancySearch" className={style.icon} /> Report lost items and help others find theirs</li>
@@ -57,10 +58,20 @@ const RegisterPage = () => {
                         <li><Icon name="trophy" className={style.icon} /> Earn rewards for your honesty and assistance</li>
                     </ul>
                 </section>
-                <section className={style.loginBox}>
-                    <h2>Sign In</h2>
-                    <p className={style.p}>Enter your credentials to access your account</p>
-                    <form className={style.loginForm} onSubmit={handleSubmit(onSubmit)}>
+                <section className={style.registerBox}>
+                    <h2>Sign Up</h2>
+                    <p className={style.p}>Enter your credentials to create your account</p>
+                    <form className={style.registerForm} onSubmit={handleSubmit(onSubmit)}>
+                        <div className={style.inputGroup}>
+                            <input type="text" id="username" {...register('username')}  placeholder='' />
+                            <label htmlFor="username">Username</label>
+                        </div>
+                        {errors.username && (
+                            <div className={style.errorContainer}>
+                                <Icon name="warning" className={style.warningIcon} />
+                                <p className={style.errorMessage}>{errors.username.message}</p>
+                            </div>
+                        )}
                         <div className={style.inputGroup}>
                             <input type="text" id="email" {...register('email')}  placeholder='' />
                             <label htmlFor="email">Email</label>
@@ -90,19 +101,32 @@ const RegisterPage = () => {
                             </div>
                         )}
 
-                        <div className={style.rememberMe}>
-                            <input type="checkbox" id="rememberMe" {...register('rememberMe')} />
-                            <label htmlFor="rememberMe">Remember Me</label>
+                        <div className={style.inputGroup}>
+                            <input type={showPassword ? "text" : "password"} id="confirmPassword" {...register('confirmPassword')} autoComplete='off'  placeholder='' />
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <span onClick={() => setShowPassword(!showPassword)} className={style.passwordToggle} >
+                                {showPassword ? 
+                                <Icon name="eyeOff" className={style.eyeIcon} />
+                                : 
+                                <Icon name="eye" className={style.eyeIcon} />
+                                }
+                            </span>
                         </div>
-                        {loginError && (
-                            <div className={`${style.errorContainer} ${style.loginError}`}>
+                        {errors.confirmPassword && (
+                            <div className={style.errorContainer}>
                                 <Icon name="warning" className={style.warningIcon} />
-                                <p className={style.errorMessage}>{loginError}</p>
+                                <p className={style.errorMessage}>{errors.confirmPassword.message}</p>
                             </div>
                         )}
-                        <button type="submit" disabled={btnDisabled}>Login</button>
+                        {registerError && (
+                            <div className={`${style.errorContainer} ${style.registerError}`}>
+                                <Icon name="warning" className={style.warningIcon} />
+                                <p className={style.errorMessage}>{registerError}</p>
+                            </div>
+                        )}
+                        <button type="submit" disabled={btnDisabled}>Register</button>
                     </form>
-                    <span className={style.signUp}>Don't have an account? <Link to="/signup" className={style.signUpLink}>Sign Up</Link></span>
+                    <span className={style.signUp}>Already have an account? <Link to="/signin" className={style.signUpLink}>Sign In</Link></span>
                 </section>
             </div>
         </>

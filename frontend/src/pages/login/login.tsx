@@ -2,7 +2,7 @@ import style from './login.module.css';
 import Icon from '../../utils/getIcon';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import loginFormSchema from '../../utils/loginFormSchema';
+import { loginFormSchema } from '../../utils/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ const LoginPage = () => {
             .then(response => {
                 console.log('Login successful:', response.data);
                 setLoginError(null);
-                navigate('/');
+                navigate('/', { replace: true });
             })
             .catch(error => {
                 console.error('Login error:', error);
