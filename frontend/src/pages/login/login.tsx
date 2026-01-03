@@ -13,6 +13,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState<string | null>(null);
 
     const { 
         register, 
@@ -28,15 +29,18 @@ const LoginPage = () => {
     });
 
     const onSubmit = (data: any) => {
-        axios.post('/api/login', data)
+        console.log('Form Data:', data);
+        axios.post(import.meta.env.VITE_API_URL + '/api/auth/signin', data, {withCredentials: true})
             .then(response => {
                 console.log('Login successful:', response.data);
+                setLoginError(null);
                 navigate('/');
             })
             .catch(error => {
                 console.error('Login error:', error);
+                setLoginError(error.response?.data?.message || 'Login failed');
             });
-    }
+    };
 
     const btnDisabled = Object.keys(errors).length > 0;
 
@@ -90,7 +94,12 @@ const LoginPage = () => {
                             <input type="checkbox" id="rememberMe" {...register('rememberMe')} />
                             <label htmlFor="rememberMe">Remember Me</label>
                         </div>
-
+                        {loginError && (
+                            <div className={`${style.errorContainer} ${style.loginError}`}>
+                                <Icon name="warning" className={style.warningIcon} />
+                                <p className={style.errorMessage}>{loginError}</p>
+                            </div>
+                        )}
                         <button type="submit" disabled={btnDisabled}>Login</button>
                     </form>
                     <span className={style.signUp}>Don't have an account? <Link to="/signup" className={style.signUpLink}>Sign Up</Link></span>
