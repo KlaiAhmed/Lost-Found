@@ -39,7 +39,7 @@ type RegisterParams = {
 };
 
 type RefreshPayload = { 
-  sub: string; 
+  id: string; 
   jwtid: string 
 };
 
@@ -49,11 +49,11 @@ type RefreshPayload = {
 /* ------------------------------------------------------------------ */
 
 const generateAccessToken = ( userId:any, username: string, role: string ) => {
-  return jwt.sign({ sub: userId.toString(), username, role },JWT_SECRET,{ expiresIn: JWT_ACCESS_EXPIRES  });
+  return jwt.sign({ id: userId.toString(), username, role },JWT_SECRET,{ expiresIn: JWT_ACCESS_EXPIRES  });
 };
 
 const generateRefreshToken = (userId: string,jwtid: string,rememberMe: boolean) => {
-  return jwt.sign({ sub: userId, jwtid },JWT_SECRET,
+  return jwt.sign({ id: userId, jwtid },JWT_SECRET,
     {expiresIn: rememberMe? JWT_REFRESH_EXPIRES_REMEMBER : JWT_REFRESH_EXPIRES_DEFAULT}
   );
 };
@@ -157,7 +157,7 @@ const refreshTokenService = async ( refreshToken: string , sessionId: string) =>
 
     const payload = jwt.verify(refreshToken,JWT_SECRET) as RefreshPayload;
 
-    const user = await User.findOne({ _id: payload.sub, 'sessions.sessionId': sessionId,});
+    const user = await User.findOne({ _id: payload.id, 'sessions.sessionId': sessionId,});
 
     if (!user) {
       return { success: false };

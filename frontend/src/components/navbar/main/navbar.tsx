@@ -7,12 +7,14 @@ import { useState, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import SearchOverlay from '../searchOverlay/searchOverlay';
 import { AnimatePresence } from 'framer-motion';
+import { AuthContext } from '../../../utils/authContext';
 
 const Navbar = () => {
-
   const { theme, setTheme } = useTheme();
   const [ overlayOpen, setOverlayOpen ] = useState(false);
   const [ searchTerm, setSearchTerm ] = useState('');
+
+  const { user } =  AuthContext;
 
   const themeSwitchWindowRef = useRef(null);
 
@@ -70,7 +72,15 @@ const Navbar = () => {
                 :<Icon name="sunmoon" className={style.themeIcon}/>
                 }
               </button>
-              <Link to="/signin" className={style.signin}>Sign In</Link>
+              {user ? (
+                <Link to="/profile" className={style.profileLink}>
+                  <Icon name="user" className={style.userIcon}/>
+                  <span className={style.username}>{user.username}</span>
+                </Link>
+              
+                ) :
+                <Link to="/signin" className={style.signin}>Sign In</Link>
+              }
             </div>
           </div>
           {isThemeWindowOpen && ( <ThemeWindow handleThemeChange={handleThemeChange} theme={theme} ref={themeSwitchWindowRef}  onClickOutside={() => setIsThemeWindowOpen(false)} /> )}

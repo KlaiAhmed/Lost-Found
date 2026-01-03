@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { registerUserService, loginUserService, refreshTokenService, logoutService } from '../services/user';
+import { registerUserService, loginUserService, refreshTokenService, logoutService } from '../services/userAuth';
 
 import { setAuthCookies, clearAuthCookies } from '../utils/cookies';
 
