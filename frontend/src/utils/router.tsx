@@ -6,6 +6,7 @@ import PostItem from "../pages/postItem/postItem";
 import ItemsPage from "../pages/items/items";
 import NotFound from "../pages/404/404";
 import LoginPage from "../pages/login/login";
+import RegisterPage from "../pages/register/register";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <NotFound />
+  },
+  {
+    path: "/signup",
+    element: <RegisterPage />,
     errorElement: <NotFound />
   }
 ]);
