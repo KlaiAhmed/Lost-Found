@@ -17,7 +17,7 @@ const Navbar = () => {
   const [ searchTerm, setSearchTerm ] = useState('');
   const [ isProfileDropDownOpen, setProfileDropDownOpen ] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const themeSwitchWindowRef = useRef(null);
   const profileDropDownRef = useRef(null);
@@ -40,9 +40,9 @@ const Navbar = () => {
     <>
         <nav className={style.navContainer}>
           <div className={style.navbarContent}>
-            <a>
+            <Link to="/">
               <img src={Logo} alt="App Logo that redirects href home on click" className={style.logo} />
-            </a>
+            </Link>
 
           <div className={style.navLinksContainer}>
             <NavLink to="/" className={({ isActive }) => navLinkClass(isActive)}>
@@ -76,7 +76,11 @@ const Navbar = () => {
                 :<Icon name="sunmoon" className={style.themeIcon}/>
                 }
               </button>
-              {user ? (
+              {loading ?
+                <div className={style.loader}>
+                  <div className={style.spinner}></div>
+                </div>
+              :user ? (
                 <div className={style.userProfile} onClick={() => setProfileDropDownOpen(!isProfileDropDownOpen)}>
                   <Icon name="user" className={style.userIcon} />
                 </div>
