@@ -1,5 +1,6 @@
 import styles from './404.module.css';
-import Navbar from '../../components/navbar/main/navbar';
+import Navbar from '../../../components/navbar/main/navbar';
+import Footer from '../../../components/footer/footer';
 import { Link } from 'react-router-dom';
 
 const NotFound = () => {
@@ -17,6 +18,7 @@ const NotFound = () => {
                     <Link className={`${styles.btn} ${styles.btnPrimary}`} to='/' title="Return to homepage">Take me home</Link>
                 </section>
             </main>
+            <Footer/>
         </>
     );
 };
