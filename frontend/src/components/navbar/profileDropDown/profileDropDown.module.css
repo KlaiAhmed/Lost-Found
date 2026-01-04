@@ -1,17 +1,17 @@
 .profileDropDown {
     position: absolute;
     right: 2%;
-    top: 60px;
+    top: 65px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.75rem;
     width: 200px;
     background-color: #0B1A2B;
     border-radius: 7px;
+    border: 1px solid #333333;
 }
 
-.profileDropDown button, .profileDropDown a {
+.profileDropDown a {
     display: flex;
     align-items: center;
     background: none;
@@ -19,7 +19,7 @@
     color: #ffffff;
     font-size: 1rem;
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem 0rem 1rem ;
     border-radius: 4px;
     transition: background-color 0.2s;
     text-decoration: none;
@@ -37,12 +37,28 @@
     width: 0px;
     height: 0px;
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 15px;
+    margin-top: -2px;
 }
 
 .active .tick{
     width: 18px;
     height: 18px;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #333333;
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: red;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0 1rem 1rem 1rem;
 }

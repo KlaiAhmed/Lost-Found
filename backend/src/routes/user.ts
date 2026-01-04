@@ -3,9 +3,9 @@ const userRouter= express.Router();
 
 import validate from "../middlewares/validateData";
 import rateLimit from "../middlewares/rateLimiter";
-import { loginSchema, registerSchema } from "../schemas/userSchema";
+import { loginSchema, registerSchema, updatedDataSchema } from "../schemas/userSchema";
 import { registerUser, loginUser, logoutUser, refreshTokenController } from "../controllers/userAuth";
-import { Me } from "../controllers/userController";
+import { Me, UpdateUser } from "../controllers/userController";
 import {requireAuth, requireAccess} from "../middlewares/requireAuth";
 
 const TenMin= 10 * 60 * 1000;
@@ -19,5 +19,7 @@ userRouter.post('/auth/logout', rateLimit(5, TenMin), logoutUser);
 userRouter.post('/auth/refresh-token', requireAuth, rateLimit(10, TenMin), refreshTokenController);
 
 userRouter.get('/auth/me', requireAccess, Me)
+
+userRouter.put('/user/:id', requireAccess, rateLimit(5, TenMin) ,validate(updatedDataSchema), UpdateUser)
 
 export default userRouter;

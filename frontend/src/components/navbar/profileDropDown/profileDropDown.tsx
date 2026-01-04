@@ -20,14 +20,10 @@ const ProfileDropDown = ( {ref, onClickOutside}: ProfileDropDownProps) => {
               Profile
               <Icon name="tick" className={style.tick} />
             </NavLink>
-            <NavLink to="/settings" className={({isActive})=>{ return isActive ? style.active : style.inactive }}>
-              <Icon name="settings" className={style.icon} />
-              Settings
-              <Icon name="tick" className={style.tick} />
-            </NavLink>
-            <button onClick={logOut} >
+            <span className={style.divider} />
+            <button onClick={logOut} className={style.logoutButton}>
               <Icon name="logout" className={style.icon} />
-              Logout
+              Sign Out
             </button>
         </div>
     </>

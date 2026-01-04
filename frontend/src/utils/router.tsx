@@ -7,6 +7,7 @@ import ItemsPage from "../pages/items/items";
 import NotFound from "../pages/404/404";
 import LoginPage from "../pages/login/login";
 import RegisterPage from "../pages/register/register";
+import ProfilePage from "../pages/profile/profile";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "items",
         element: <ItemsPage />
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />
       }
     ]
   },

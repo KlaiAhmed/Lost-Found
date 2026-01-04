@@ -1,6 +1,6 @@
 import style from './register.module.css';
 import Icon from '../../utils/getIcon';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { registerFormSchema } from '../../utils/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,9 +9,6 @@ import { useState } from 'react';
 
 
 const RegisterPage = () => {
-
-    const navigate = useNavigate();
-
     const [showPassword, setShowPassword] = useState(false);
     const [registerError, setRegisterError] = useState<string | null>(null);
 
@@ -35,7 +32,7 @@ const RegisterPage = () => {
             .then(response => {
                 console.log('Registration successful:', response.data);
                 setRegisterError(null);
-                navigate('/', { replace: true });
+                window.location.href = '/';
             })
             .catch(error => {
                 console.error('Registration error:', error);

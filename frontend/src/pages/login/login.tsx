@@ -1,6 +1,6 @@
 import style from './login.module.css';
 import Icon from '../../utils/getIcon';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { loginFormSchema } from '../../utils/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,9 +9,6 @@ import { useState } from 'react';
 
 
 const LoginPage = () => {
-
-    const navigate = useNavigate();
-
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -34,7 +31,7 @@ const LoginPage = () => {
             .then(response => {
                 console.log('Login successful:', response.data);
                 setLoginError(null);
-                navigate('/', { replace: true });
+                window.location.href = '/';
             })
             .catch(error => {
                 console.error('Login error:', error);
