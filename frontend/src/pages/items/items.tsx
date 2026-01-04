@@ -11,7 +11,6 @@ const ItemsPage = () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/items`);
       setData(response.data);
-      console.log('Fetched items:', response.data);
     } catch (error) {
       console.error('Error fetching items:', error);
     }
@@ -30,15 +29,15 @@ const ItemsPage = () => {
             </div>
 
             <div className={style.gridContainer}>
-              <div className={style.itemsGrid}>
                   {data.items.length > 0 ? 
-                    data.items.map((item) => (
-                        <ItemCard item={item} key={item._id} />
-                    )) 
+                    <div className={style.itemsGrid}>
+                      {data.items.map((item) => (
+                          <ItemCard item={item} key={item._id} />
+                      ))}
+                    </div>
                     : 
-                    <p>No items found.</p>
+                    <p>No items found. Be the first to add one!</p>
                   }
-              </div>
             </div>
         </div>
     </>
