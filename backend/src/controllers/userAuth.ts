@@ -68,11 +68,11 @@ const refreshTokenController = async (req: Request, res: Response) => {
 const logoutUser = async (req: Request, res: Response) => {
   const userId = (req as any).user?._id;
   const sessionId = req.cookies?.session_id;
-  const result = await logoutService(userId, sessionId);
-  if (!result.success) {
-    clearAuthCookies(res);
-    return res.status(401).json({ success: false });
+
+  if (userId && sessionId) {
+    await logoutService(userId, sessionId);
   }
+
   clearAuthCookies(res);
   return res.status(200).json({ success: true });
 };

@@ -160,7 +160,7 @@ Base path: `/api`
 * `POST /auth/logout`         — logout user from session
 * `POST /auth/refresh-token`  — refresh user tokens
 * `GET  /me`             — get user data (require active user session)
-* `GET /user:id`        — get user by id
+* `GET /user/:id`        — get user data by id
 * `GET  /users`           — get all users data
   
 ---

@@ -211,20 +211,10 @@ const refreshTokenService = async ( refreshToken: string , sessionId: string) =>
 /* Logout */
 /* ------------------------------------------------------------------ */
 const logoutService = async (userId: string, sessionId: string) => {
-
-  if (!userId || !sessionId) {
-    return { success: false };
-  }
-
-  const user = await User.findById(userId);
-  if (!user) {
-    return { success: false };
-  }
-
-  user.sessions.pull({ sessionId });
-
-  await user.save();
-  return { success: true };
+  await User.updateOne(
+    { _id: userId },
+    { $pull: { sessions: { sessionId } } }
+  );
 };
 
 

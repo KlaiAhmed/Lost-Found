@@ -36,6 +36,7 @@ const setAuthCookies = (res: Response,accessToken: string,refreshToken: string,s
         secure: isProd,
         sameSite: 'lax',
         path: '/',
+        maxAge: refreshMaxAge,
     });
 };
 
@@ -49,7 +50,6 @@ const clearAuthCookies = (res: Response) => {
         secure: isProd,
         sameSite: 'lax',
         path: '/',
-        maxAge: 15 * 60 * 1000,
     });
 };
 
