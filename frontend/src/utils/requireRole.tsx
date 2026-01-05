@@ -9,7 +9,7 @@ type RequireRoleProps = {
 const RequireRole: React.FC<RequireRoleProps> = ({ allowedRoles }) => {
     const { user } = useContext(AuthContext);
     if (!user) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/signin" replace />;
     }
 
     if (!allowedRoles.includes(user.role)) {
