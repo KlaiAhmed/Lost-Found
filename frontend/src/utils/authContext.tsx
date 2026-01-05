@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import getCsrfToken from './getCsrfTooken';
-import hasAuthCookies from './hasAuthCookies';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null);
@@ -13,14 +12,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (hasChecked.current) return;
       hasChecked.current = true;
 
-      if (!hasAuthCookies()) {
+      const csrfToken = await getCsrfToken();
+      if (!csrfToken) {
         setUser(null);
         setLoading(false);
         return;
       }
 
       try {
-        const csrfToken = await getCsrfToken();
 
         const res = await axios.get(
           import.meta.env.VITE_API_URL + '/api/auth/me',
