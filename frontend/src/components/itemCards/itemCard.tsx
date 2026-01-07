@@ -4,11 +4,11 @@ import Icon from '../../utils/getIcon';
 
 type ItemCardProps = {
     reward?: number;
-    title: string;
+    itemName: string;
     category: string;
     createdAt: string;
     status: string;
-    holder: { city: string };
+    holder: { state: string };
     image: { path: string };
 };
 
@@ -25,13 +25,16 @@ const statusStyles = (status: string) => {
 }
 
 const ItemCard = ({ item }: Props) => {
-    const { reward, title, category, createdAt, status } = item;
-    const croppedReward = reward && Number.isFinite(reward) && status.toLowerCase() !== 'lost' ? (String(reward).length > 5 ? String(reward).slice(0, 4) + '..' : String(reward)) : null;
-    const location= item.holder.city 
-    const imgSrc = item.image.path
+    const { reward, itemName, category, createdAt, status } = item;
+    const croppedReward = status === 'lost' && reward != null ? (String(reward).length > 5 ? String(reward).slice(0, 4) + '..' : String(reward)) : null;
+    const location= item.holder.state 
+    let imgSrc = import.meta.env.VITE_API_URL + '/' + item.image.path;
+    if (!imgSrc) {
+        imgSrc ='../../assets/placeHolder.png';
+    }
     const timePassed = calculateTimePassed(createdAt);
     const upperCategory = category.charAt(0).toUpperCase() + category.slice(1);
-    const Title = title.charAt(0).toUpperCase() + title.slice(1);
+    const Title = itemName.charAt(0).toUpperCase() + itemName.slice(1);
     const croppedTitle = Title.length > 22 ? Title.slice(0, 20) + '...' : Title;
 
     return (
@@ -43,7 +46,7 @@ const ItemCard = ({ item }: Props) => {
                 </div>
                 <div className={style.infoContainer}>
                     <div className={style.itemDetails}>
-                        {croppedReward &&
+                        {croppedReward && croppedReward !== '0' &&
                             <span className={style.reward}>{croppedReward}TND</span>
                         }
                         <span className={style.itemName}>{croppedTitle}</span>

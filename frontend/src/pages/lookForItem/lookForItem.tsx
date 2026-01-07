@@ -68,6 +68,7 @@ const lookForItem = () => {
 
             //reset();
             setIsFormError(null);
+            alert('Lost item posted successfully!');
         } catch (error: any) {
             setIsFormError(error.response?.data?.message || 'Failed to post lost item');
         }
