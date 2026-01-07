@@ -1,8 +1,17 @@
 import express, { Request, Response } from 'express';
-import { uploadSingle } from '../middlewares/upload';
-import Item from '../models/item';
-
 const itemRouter = express.Router();
+
+import Item from '../models/item';
+import rateLimiter from '../middlewares/rateLimiter';
+import validate  from '../middlewares/validateData';
+import { lookForItemController } from '../controllers/itemController';
+import { lookForItemSchema } from '../schemas/itemSchema';
+import { uploadSingleToMem } from '../middlewares/uploadImgToMem';
+import UploadImg from '../middlewares/uploadImg';
+
+
+const tenMin = 10 * 60 * 1000;
+itemRouter.post('/lookforitem', rateLimiter(10,tenMin), uploadSingleToMem, validate(lookForItemSchema), UploadImg, lookForItemController );
 
 function parseIfJson(value: any) {
   if (!value) return undefined;
@@ -14,7 +23,7 @@ function parseIfJson(value: any) {
   }
 }
 
-itemRouter.post('/postitem', uploadSingle, async (req: Request, res: Response) => {
+itemRouter.post('/postitem', uploadSingleToMem, async (req: Request, res: Response) => {
   try {
     const body = req.body;
     if (!body.title) return res.status(400).json({ error: 'title required' });
@@ -35,48 +44,6 @@ itemRouter.post('/postitem', uploadSingle, async (req: Request, res: Response) =
       meetup: parseIfJson(body.meetup),
       additionalNotes: body.additionalNotes,
       status: 'found'
-    };
-
-    if (req.file) {
-      const path = `${req.protocol}://${req.get('host')}/src/uploads/${req.file.filename}`;
-      doc.image = {
-        filename: req.file.filename,
-        originalname: req.file.originalname,
-        mimetype: req.file.mimetype,
-        size: req.file.size,
-        path: path
-      };
-    }
-
-    const saved = await Item.create(doc);
-    return res.status(201).json({ success: true, item: saved });
-  } catch (err) {
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-itemRouter.post('/lookitem', uploadSingle, async (req: Request, res: Response) => {
-  try {
-    const body = req.body;
-
-    if (!body.title) return res.status(400).json({ error: 'title required' });
-
-    const contact = parseIfJson(body.contact);
-    const contactName = (contact && contact.name) || body.contactName || body.contact_name;
-    if (!contactName) return res.status(400).json({ error: 'contact.name required' });
-
-    const doc: any = {
-      title: body.title,
-      description: body.description,
-      category: body.category,
-      dateOccurred: body.dateOccurred ? new Date(body.dateOccurred) : undefined,
-      timeOccurred: body.timeOccurred,
-      holder: parseIfJson(body.holder),
-      contact: typeof contact === 'object' ? contact : { name: contactName, phone: body.phone, email: body.email },
-      reward: body.reward,
-      additionalNotes: body.additionalNotes,
-      status: 'lost'
     };
 
     if (req.file) {

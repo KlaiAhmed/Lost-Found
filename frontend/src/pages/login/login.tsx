@@ -2,7 +2,7 @@ import style from './login.module.css';
 import Icon from '../../utils/getIcon';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { loginFormSchema } from '../../utils/authFormsSchemas';
+import { loginFormSchema } from '../../scheams/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
@@ -25,18 +25,16 @@ const LoginPage = () => {
         }
     });
 
-    const onSubmit = (data: any) => {
-        console.log('Form Data:', data);
-        axios.post(import.meta.env.VITE_API_URL + '/api/auth/signin', data, {withCredentials: true})
-            .then(response => {
-                console.log('Login successful:', response.data);
-                setLoginError(null);
-                window.location.href = '/';
-            })
-            .catch(error => {
-                console.error('Login error:', error);
-                setLoginError(error.response?.data?.message || 'Login failed');
-            });
+    const onSubmit = async (data: any) => {
+        try {
+            await axios.post(import.meta.env.VITE_API_URL + '/api/auth/signin', data, { withCredentials: true });
+            setLoginError(null);
+            window.location.href = '/';
+        } catch (error: any) {
+            console.error('Login error:', error);
+            const errorMessage = error.response?.data?.message || 'Login failed';
+            setLoginError(errorMessage);
+        }
     };
 
     const btnDisabled = Object.keys(errors).length > 0;

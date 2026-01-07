@@ -2,7 +2,7 @@ import style from './register.module.css';
 import Icon from '../../utils/getIcon';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { registerFormSchema } from '../../utils/authFormsSchemas';
+import { registerFormSchema } from '../../scheams/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
@@ -26,18 +26,16 @@ const RegisterPage = () => {
         }
     });
 
-    const onSubmit = (data: any) => {
-        console.log('Form Data:', data);
-        axios.post(import.meta.env.VITE_API_URL + '/api/auth/signup', data, {withCredentials: true})
-            .then(response => {
-                console.log('Registration successful:', response.data);
-                setRegisterError(null);
-                window.location.href = '/';
-            })
-            .catch(error => {
-                console.error('Registration error:', error);
-                setRegisterError(error.response?.data?.message || 'Registration failed');
-            });
+    const onSubmit = async (data: any) => {        
+        try {
+            await axios.post(import.meta.env.VITE_API_URL + '/api/auth/signup', data, { withCredentials: true });
+            setRegisterError(null);
+            window.location.href = '/';
+        } catch (error: any) {
+            console.error('Registration error:', error);
+            const errorMessage = error.response?.data?.message || 'Registration failed';
+            setRegisterError(errorMessage);
+        }
     };
 
     const btnDisabled = Object.keys(errors).length > 0;

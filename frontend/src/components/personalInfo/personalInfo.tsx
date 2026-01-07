@@ -2,7 +2,7 @@ import style from './personalInfo.module.css'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../utils/authContext'
 import { useForm } from 'react-hook-form';
-import { updatedDataSchema } from '../../utils/authFormsSchemas';
+import { updatedDataSchema } from '../../scheams/authFormsSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import getCsrfToken from '../../utils/getCsrfTooken';
@@ -35,22 +35,20 @@ const PersonalInfo = () => {
         }
     });
 
-    const onSubmit = async (data:any) => {
-        const token = await getCsrfToken();
-        const payload = cleanPayload(data);
-        console.log('Cleaned Payload:', payload);
-        await axios.put(import.meta.env.VITE_API_URL + `/api/user/${user.id}`, payload, { withCredentials: true, headers: { 'x-csrf-token': token } })
-            .then(response => {
-                console.log('Registration successful:', response.data);
-                setUpdateError(null);
-                setEditMode(false);
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Registration error:', error);
-                setUpdateError(error.response?.data?.message || 'Registration failed');
-            });
-    }
+    const onSubmit = async (data: any) => {
+        try {
+            const token = await getCsrfToken();
+            const payload = cleanPayload(data);
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/user/${user.id}`, payload, {     withCredentials: true,     headers: { 'x-csrf-token': token } });
+            setUpdateError(null);
+            setEditMode(false);
+            window.location.reload();
+        } catch (error: any) {
+            console.error('Update error:', error);
+            const errorMessage = error.response?.data?.message || 'Update failed';
+            setUpdateError(errorMessage);
+        }
+    };
 
     return (
         <>

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../pages/mainLayout/mainLayout";
 import Home from "../pages/Home/home";
-import LookItem from "../pages/lookItem/lookItem";
+import LookForItem from "../pages/lookForItem/lookForItem";
 import PostItem from "../pages/postItem/postItem";
 import ItemsPage from "../pages/items/items";
 import NotFound from "../pages/errors/404/404";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <RequireRole allowedRoles={["user", "admin"]} />,
         children: [
           { path: "profile", element: <ProfilePage /> },
-          { path: "lookforitem", element: <LookItem /> },
+          { path: "lookforitem", element: <LookForItem /> },
           { path: "postfounditem", element: <PostItem /> }
         ]
       }

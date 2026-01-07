@@ -1,0 +1,31 @@
+
+.errorContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--error);
+}
+
+.errorContainerCentred {
+    align-self: center;
+}
+
+.errorContainerCentred .errorMessage {
+    font-size: 1.1rem;
+}
+
+
+.errorMessage {
+    color: var(--error);
+    font-size: 0.9rem;
+    margin: 0;
+    word-break: break-word;
+    flex-grow: 1;
+}
+
+.warningIcon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}

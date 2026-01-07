@@ -3,6 +3,8 @@ import useClickOutside from '../../../hooks/useClickOutside';
 import { NavLink } from 'react-router-dom';
 import Icon from '../../../utils/getIcon';
 import logOut from '../../../utils/logout';
+import { useContext } from "react";
+import { AuthContext } from "../../../utils/authContext";
 
 type ProfileDropDownProps = {
   ref: React.RefObject<HTMLDivElement>;
@@ -11,6 +13,7 @@ type ProfileDropDownProps = {
 
 const ProfileDropDown = ( {ref, onClickOutside}: ProfileDropDownProps) => {
   useClickOutside({ref: ref, onClickOutside: onClickOutside});
+  const { setUser } = useContext(AuthContext);
 
   return (
     <>
@@ -21,7 +24,7 @@ const ProfileDropDown = ( {ref, onClickOutside}: ProfileDropDownProps) => {
               <Icon name="tick" className={style.tick} />
             </NavLink>
             <span className={style.divider} />
-            <button onClick={logOut} className={style.logoutButton}>
+            <button onClick={() => logOut({ setUser })} className={style.logoutButton}>
               <Icon name="logout" className={style.icon} />
               Sign Out
             </button>

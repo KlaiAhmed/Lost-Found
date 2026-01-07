@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType } from 'mongoose';
 
 const HolderSchema = new mongoose.Schema({
     address: String,
-    city: String,
+    state: String,
     postal: String,
 }, { _id: false });
 
@@ -30,7 +30,7 @@ const ImageMetaSchema = new mongoose.Schema({
 }, { _id: false });
 
 const ItemSchema = new mongoose.Schema({
-    title: { 
+    itemName: { 
         type: String, 
         required: true 
     },
@@ -74,3 +74,4 @@ const ItemSchema = new mongoose.Schema({
 ItemSchema.index({ status: 1, location: 'text', createdAt: -1 });
 
 export default mongoose.model('Item', ItemSchema);
+export type ItemDocument = InferSchemaType<typeof ItemSchema>;

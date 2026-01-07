@@ -29,14 +29,14 @@ const updatedDataSchema = z
       emptyToUndefined,
       z.string().email().optional()
     ),
-    currentPassword: z.string().min(8, 'Current password is required'),
+    currentPassword: z.string().nonempty({ message: 'Current password is required' }).min(8, { message: 'Current password must be at least 8 characters long' }),
     password: z.preprocess(
       emptyToUndefined,
-      z.string().min(8).optional()
+      z.string().min(8, { message: 'Password must be at least 8 characters long' }).optional()
     ),
     confirmPassword: z.preprocess(
       emptyToUndefined,
-      z.string().min(8).optional()
+      z.string().min(8, { message: 'Password must be at least 8 characters long' }).optional()
     ),
   })
   .refine(
