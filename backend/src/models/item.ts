@@ -51,10 +51,6 @@ const ItemSchema = new mongoose.Schema({
         possible: { type: Boolean, default: false },
         details: String
     },
-    meetup: {
-        possible: { type: Boolean, default: false },
-        details: String
-    },
     reward: { 
         type: Number,
         min: 0,

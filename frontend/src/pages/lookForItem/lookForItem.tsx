@@ -64,13 +64,13 @@ const lookForItem = () => {
 
             payload.append('image', data.image[0]);
 
-            await axios.post(import.meta.env.VITE_API_URL + '/api/lookforitem', payload, {withCredentials: true,headers: {'x-csrf-token': csrf}});
+            await axios.post(import.meta.env.VITE_API_URL + '/api/lookforitem', payload, {withCredentials: true, headers: {'x-csrf-token': csrf}});
 
-            //reset();
+            reset();
             setIsFormError(null);
             alert('Lost item posted successfully!');
         } catch (error: any) {
-            setIsFormError(error.response?.data?.message || 'Failed to post lost item');
+            setIsFormError(error.response?.data?.message || 'Failed to post found item. Please try again');
         }
     };
 
@@ -146,11 +146,13 @@ const lookForItem = () => {
                 <option value="email">Email</option>
                 <option value="text">Text Message</option>
             </select>
+            {errors.contactMethod && 
+                <FormError message={errors.contactMethod.message!} marginTop />
+            }
 
 
             {/* Address Section */}
             <h2 className={style.formSubtitle}>Address</h2>
-
 
             <label >State</label>
             <select {...register('state')}>
@@ -184,7 +186,7 @@ const lookForItem = () => {
                 <FormError message={errors.state.message!} marginTop />
             }
 
-            <label >Street</label>
+            <label >Address</label>
             <input type="text" placeholder='Enter your address' {...register('address')} />
             {errors.address && 
                 <FormError message={errors.address.message!} marginTop />
@@ -196,7 +198,6 @@ const lookForItem = () => {
                 <FormError message={errors.postalCode.message!} marginTop />
             }
 
-
             {/* Lost details Section */}
             <h2 className={style.formSubtitle}>Details</h2>
 
@@ -206,23 +207,21 @@ const lookForItem = () => {
                 <FormError message={errors.locationLost.message!} marginTop />
             }
 
-            <div className={style.timeOccurredContainer}>
-                <div className={style.dateOccurredItem}>
-                    <label >Date Lost</label>
-                    <input type="date" {...register('date')} />
-                </div>
-                {errors.date && 
-                    <FormError message={errors.date.message!} marginTop />
-                }
-
-                <div className={style.timeOccurredItem}>
-                    <label>Time Lost</label>
-                    <input type="time" {...register('time')} />
-                </div>
-                {errors.time && 
-                    <FormError message={errors.time.message!} marginTop />
-                }
+            <div className={style.dateOccurredItem}>
+                <label >Date Lost</label>
+                <input type="date" max={new Date().toISOString().split("T")[0]} {...register('date')} />
             </div>
+            {errors.date && 
+                <FormError message={errors.date.message!} marginTop />
+            }
+
+            <div className={style.timeOccurredItem}>
+                <label>Time Lost</label>
+                <input type="time" {...register('time')} />
+            </div>
+            {errors.time && 
+                <FormError message={errors.time.message!} marginTop />
+            }
 
 
             {/* Additional details Section */}
