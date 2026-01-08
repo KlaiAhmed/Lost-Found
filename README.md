@@ -8,9 +8,12 @@ A full‑stack application letting users post **found** items (optionally offeri
 
 ## Key features
 
-* Post found items (images, description, location, optional reward)
-* Post lost item reports and browse found items
+* Secure authentication using JWTs in HTTP-only cookies with server-side sessions, automatic login, token refresh, and CSRF protection.
+* Post found items, or report a lost item (image, description, location, optional reward ...)
+* Browse found/lost items
 * Light / Dark / System theme with persistent user preference
+
+
 
 ---
 
@@ -29,7 +32,7 @@ Project structure :
 ```
 /backend
 ├─ src
-│ ├─ config        # Environment variables, database connection logic
+│ ├─ config        # Database connection logic
 │ ├─ controllers   # Request handling 
 │ ├─ middlewares   # Validation, rate limiting, image upload ...
 │ ├─ models        # Database schemas  
@@ -38,7 +41,7 @@ Project structure :
 │ ├─ services      # LOGIC (DB interactions)
 │ ├─ utils         # Helper functions
 │ └─ server.ts     # Main
-├─ uploads         # This repository includes items photos
+├─ uploads         # This repository includes compressed items photos
 ├─ .env            # Secrets
 ├─ .gitignore
 └─ vite.config.ts
@@ -46,7 +49,7 @@ Project structure :
 /frontend
 ├── public
 ├── src
-│   ├── assets         
+│   ├── assets         # Static asstets (images , logos, placehoders)
 │   ├── components     # Reusable UI building blocks (Buttons, Inputs, Modals)
 │   ├── hooks          # Custom React hooks for shared logic
 │   ├── pages          # Top-level route components (Home, Items, Signin)
@@ -92,10 +95,30 @@ Open the client (`http://localhost:5173`) and the server (`http://localhost:5000
 Example `backend/.env`:
 
 ```
+# Environment
+NODE_ENV=development
+
+# Server
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/lost&found
-saltRounds=10
-JWT_SECRET=your_jwt_secret_key
+CLIENT_URL=http://localhost:5173
+
+# Database 
+MONGO_URI=mongodb://127.0.0.1:27017/lostandfound
+
+# Security & auth
+# bcrypt salt rounds (integer). Recommended: 12 (acceptable range: 8-16)
+BCRYPT_SALT_ROUNDS=12
+
+# JWT & session durations
+JWT_SECRET=replace_with_a_long_random_secret_string
+JWT_ACCESS_EXPIRES=15m               # format: e.g. 15m = 15 minutes
+JWT_REFRESH_EXPIRES_REMEMBER=7d     # format: e.g. 7d = 7 days
+JWT_REFRESH_EXPIRES_DEFAULT=1d      # format: e.g. 1d = 1 day
+
+# Application limits
+MAX_SESSIONS=5                      # integer: maximum concurrent sessions per user
+
+
 ```
 
 Example `frontend/.env` (Vite):
@@ -120,8 +143,8 @@ VITE_API_BASE_URL=http://localhost:5000
   status: { type: String, enum: ['found', 'lost', 'returned'] },
   reward: Number,
   holder: {
-    address: String,
-    city: String,
+    street: String,
+    state: String,
     postal: String
   },
   contact: {
@@ -134,6 +157,7 @@ VITE_API_BASE_URL=http://localhost:5000
     filename: String,
     mimetype: String,
     size: Number,
+    path: String,
     uploadedAt: Date
   },
   additionalNotes: String
@@ -194,17 +218,120 @@ const router = createBrowserRouter([
 ]);
 ```
 
-## Dark/Light/System theme implementation notes
+## Authentication overview (JWT + HTTP cookies)
 
-* Store preference in `localStorage` as `'light'|'dark'|'system'`.
-* If `system`, resolve active theme with `window.matchMedia('(prefers-color-scheme: dark)')`.
-* Apply a `data-theme` attribute on `document.documentElement` (`'light'` or `'dark'`) and manage colors with CSS variables. Provide a `useTheme` hook that exposes `choice` and `setChoice`.
+This app uses a cookie-based JWT authentication system combined with server-side session records and CSRF protection.  
+The implementation created for this project follows these principles:
+
+- Short-lived **access token** (JWT) kept in an `HttpOnly` cookie for accessing protected routes.  
+- Long-lived **refresh token** (JWT) kept in an `HttpOnly` cookie used only at the refresh endpoint to obtain new access tokens.  
+- A server-side **session record** (referenced by an `HttpOnly` `SESSION_ID` cookie) that enables revocation, session listing, and session limits.  
+- A non-`HttpOnly` **CSRF token cookie** that the frontend reads and forwards in an authentication header; the backend middleware verifies that the header value matches the session-stored CSRF token.
+
+> Registration performs an automatic sign-in: `signup` creates the user, opens a session, issues tokens, and sets all required cookies.
 
 ---
 
-## Image uploads
+### Cookie names (as used in this project)
+- `session_id` — **HttpOnly** opaque session identifier. Server uses it to lookup and manage session state.  
+- `acess_token` — **HttpOnly** JWT with a short TTL. Used by server middleware to authenticate protected requests.  
+- `refresh_token` — **HttpOnly** JWT with a long TTL. Sent automatically by the browser to the refresh endpoint; used to obtain a new `acess_token`.  
+- `csrf_token` — **NOT HttpOnly**. Random token stored in the session and set as a cookie so client-side JavaScript can read it and send it in an authentication header.
 
-* Use `multer` for multipart uploads uploaded to /backend/uploads.
+---
+
+### Cookie attributes (recommended / used)
+- `HttpOnly`: `true` for `SESSION_ID`, `ACCESS_TOKEN`, `REFRESH_TOKEN`. `false` for `CSRF_TOKEN`.  
+- `Secure`: `true` in production (HTTPS).  
+- `SameSite`: `Lax` .  
+- `Path`:  `/`.  
+- `Max-Age` / TTLs: defined by environment configuration (access token short, refresh token long).
+
+---
+
+## Flows (endpoints & behavior)
+
+### `POST /auth/signup`
+1. Validate input and create the user.  
+2. Create a server-side session record:
+   - generate `sessionId` and `csrfToken`, store both in the session record.  
+3. Sign `ACCESS_TOKEN` and `REFRESH_TOKEN` JWTs containing at least `{ userId, sessionId }`.  
+4. Set four cookies: `SESSION_ID` (HttpOnly), `ACCESS_TOKEN` (HttpOnly), `REFRESH_TOKEN` (HttpOnly), `CSRF_TOKEN` (readable by JS).  
+5. Respond with user info (no tokens in the response body). Result: user is automatically logged in after registration.
+
+### `POST /auth/signin`
+1. Validate credentials.  
+2. Enforce session limits if configured (e.g., `MAX_SESSIONS`).  
+3. Create session, sign tokens, set the same four cookies as in registration.  
+4. Respond with user info.
+
+### Protected routes (middleware)
+1. Middleware reads `ACCESS_TOKEN` from cookie and verifies signature & expiry.  
+2. Extract `sessionId` from token payload and fetch the server-side session:
+   - If session is missing or revoked → `401`.  
+3. For state-changing HTTP methods (POST, PUT, PATCH, DELETE), require CSRF verification:
+   - Read header (e.g. `X-CSRF-Token`) sent by the client.  
+   - Compare header value with the `csrfToken` stored in the session. If mismatched → `403`.  
+4. On success attach `req.user` (or equivalent) and continue.
+   
+> IF `ACCESS_TOKEN` is expired, and the user have a valid `REFRESH_TOKEN`, its used to generate a new acess token.
+
+### `POST /auth/refresh-token`
+1. Browser automatically sends `REFRESH_TOKEN` and `SESSION_ID` cookies.  
+2. Server verifies `REFRESH_TOKEN` and session validity.  
+3. If valid, issue a fresh `ACCESS_TOKEN` (and optionally rotate `REFRESH_TOKEN`) and set the cookie(s).  
+4. If invalid or expired → `401` (client must re-authenticate).
+
+### `POST /auth/signout`
+1. Revoke the session server-side (mark revoked or delete).  
+2. Clear `SESSION_ID`, `ACCESS_TOKEN`, `REFRESH_TOKEN`, and `CSRF_TOKEN` cookies.  
+3. Respond `200`.
+
+---
+
+## CSRF protection (double-submit / server verification)
+- A cryptographically secure `csrfToken` is generated when a session is created and stored in the session record.  
+- The server sets a `CSRF_TOKEN` cookie (non-HttpOnly) containing the same token so frontend JS can read it.  
+- The frontend reads `CSRF_TOKEN` and sends it on state-changing requests in a header (for example `X-CSRF-Token`). Example:
+
+```ts
+await axios.put('/api/user/user_id', payload, {   withCredentials: true, headers: { 'x-csrf-token': token } });
+```
+
+
+
+## Image Processing Architecture
+
+#### 1. Request Handling (Memory Buffer)
+Images are initially held in a temporary memory buffer via Multer.
+
+* **Validation First**: The server validates all form fields before any file is permanently written to disk.
+
+* **Efficiency**: If form validation fails, the memory is cleared, preventing junk files.
+  
+#### Post-Validation Processing
+Once the request is validated, the image undergoes a transformation using Sharp :
+
+* **Compression & Format**: Images are converted to .webp format with a quality setting of 80%.
+  
+* **Resizing**: Images are automatically scaled to a maximum width of 800px .
+
+#### 3. Dynamic Storage Strategy
+Files are organized into a hierarchical directory structure :
+
+* **Structure**: /uploads/YYYY/MM/DD/unique-uuid.webp
+  
+* **Path Logic**: The system automatically generates nested subfolders based on the current date and assigns a unique UUID to every file to prevent filename collisions.
+
+
+---
+## Dark/Light/System theme implementation notes
+
+* Store preference in `localStorage` as `'light'|'dark'|'system'`.
+  
+* If `system`, resolve active theme with `window.matchMedia('(prefers-color-scheme: dark)')`.
+  
+* Apply a `data-theme` attribute on `document.documentElement` ('light' or 'dark') and manage colors with CSS variables. Provide a `useTheme` hook that exposes `choice` and `setChoice`.
 
 ---
 
@@ -234,8 +361,6 @@ const router = createBrowserRouter([
 <a href="ScreenShots/ErrorPage.png">
   <img src="ScreenShots/ErrorPage.png" alt="Error page" width="420">
 </a>
-
-
 
 
 ---
