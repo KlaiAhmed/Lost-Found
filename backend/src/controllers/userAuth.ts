@@ -20,8 +20,12 @@ const registerUser = async (req: Request, res: Response) => {
 
       const loginResult = await loginUserService({email,password,rememberMe:false,userAgent})
       if (!loginResult.success || !loginResult.data) {
-        return res.status(401).json({success: false,message: loginResult.message || 'login failed after registration'});
+        return res.status(401).json({success: false, message: loginResult.message || 'login failed after registration'});
       }
+
+      const { accessToken, refreshToken, sessionId } = loginResult.data;
+
+      setAuthCookies(res,accessToken,refreshToken,sessionId,false);
 
       return res.status(201).json({success: true,message: 'User registered successfully'});
     } catch (err) {
